@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../css/index.css" />
+  </head>
+  <body>
+    <section class="container my-5 py-3">
+      <div class="row">
+        <div class="col-md-4">
+          <div
+            class="container d-flex justify-content-center"
+            style="width: 100%"
+          >
+            <button
+              class="btn btn-green mt-3 px-4 border border-primary py-3 w-500"
+              onclick="takePicture()"
+            >
+              Click here or on Image to take photos
+            </button>
+          </div>
+          <div
+            class="container d-flex justify-content-center"
+            style="width: 100%"
+          >
+            <a
+              href="../index.html"
+              class="btn btn-light mt-3 px-4 border border-primary py-3 w-500"
+            >
+              collect data for another patient
+            </a>
+          </div>
+          <div
+            class="container d-flex justify-content-center"
+            style="width: 100%"
+          >
+            <a
+              href="./blastoserve_ad.html"
+              class="btn btn-light mt-3 px-4 border border-primary py-3 w-500"
+            >
+              Stop taking data
+            </a>
+          </div>
+        </div>
+        <div class="col-md-8" onclick="takePicture()">
+          <video id="webcam" autoplay playsinline></video>
+          <canvas id="canvas" class="d-none"></canvas>
+          <audio
+            id="snapSound"
+            src="./assets/audio/snap.mp3"
+            preload="auto"
+          ></audio>
+        </div>
+      </div>
+    </section>
+
+    <section class="container">
+      <!-- <div class="card p-1 border border-light rounded" style="width: 18rem">
+        <h5 class="card-title">Card title</h5>
+        <div class="card-footer text-muted">2 days ago</div>
+        <img src="..." class="card-img-top" alt="..." />
+        
+      </div> -->
+
+      <div id="myImageList"></div>
+    </section>
+    <script src="../js/webCam.js"></script>
+    <script src="../js/index.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

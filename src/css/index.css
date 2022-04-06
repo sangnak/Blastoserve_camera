@@ -1,0 +1,55 @@
+body {
+  font-family: BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  margin: 0;
+
+  padding: 0;
+  box-sizing: border-box;
+  background-color: rgba(0, 0, 0, 0.089);
+}
+.btn-green {
+  background-color: #269326;
+  padding: 20px 10px;
+  color: rgba(255, 255, 255, 0.9);
+}
+.btn-green:hover {
+ 
+ color: rgba(255, 255, 255, 0.9);
+}
+.container1{
+  max-width: 38rem;
+}
+
+#webcam{
+  width: 800px;
+  height: 500px;
+  transform: scale(-1, 1);
+  margin: 0;
+  padding: 0;
+  margin-left: 22%;
+}
+
+.w-500{
+  width: 500px;
+}
+#myImageList{
+  display: inline-flex !important;
+  flex-wrap: wrap;
+ 
+    flex-direction: row;
+
+}
+.img-container{
+  margin: 10px 20px;
+  padding: 8px 15px;
+}
+.img-container h4{
+ font-size: medium;
+}
+.img-container img{
+ width: 200px;
+ display: flex;
+ justify-content: center;
+ margin: 0 auto;
+
+}
