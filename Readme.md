@@ -1,4 +1,4 @@
-To Start the development server clone the reposetory
+To Start the development server clone the repo
 
 and then go to the project directory and type npm install && npm start 
 
