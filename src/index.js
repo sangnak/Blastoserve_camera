@@ -13,11 +13,13 @@ const createWindow = () => {
     width: 800,
     height: 850,
     webPreferences: {
-      
-      preload: path.join(__dirname, "preload.js"),
+      nodeIntegration: true,
+      contextIsolation: false,
+
+      // preload: path.join(__dirname, "preload.js"),
     },
   });
-
+  mainWindow.setMenuBarVisibility(false);
   // and load the index.html of the app.
   mainWindow.loadFile("./src/index.html");
 

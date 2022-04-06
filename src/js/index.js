@@ -2,7 +2,7 @@ const webcamElement = document.getElementById("webcam");
 const canvasElement = document.getElementById("canvas");
 const snapSoundElement = document.getElementById("snapSound");
 let submitButton = document.getElementById("submit_button");
-let fname = document.getElementById("fname");
+
 let imageList = document.getElementById("myImageList");
 let newUser = "user";
 const webcam = new Webcam(
@@ -25,21 +25,7 @@ function startCamera() {
 
 startCamera();
 
-// const folderName = "../../projects";
 
-// try {
-//   if (!fs.existsSync(folderName)) {
-//     fs.mkdirSync(folderName);
-//   }
-// } catch (err) {
-//   console.error(err);
-// }
-
-//change the button name
-function handleChange() {
-  fname = fname.value;
-  submitButton.innerText = `start capturing data for ${fname}`;
-}
 
 //take picture function
 function takePicture() {

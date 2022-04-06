@@ -41,7 +41,7 @@ jspm_packages
 
 src/js/js
 src/sample.js
-src/render.js
+
 # TypeScript v1 declaration files
 typings/
 
