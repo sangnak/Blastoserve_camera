@@ -45,20 +45,20 @@ function takePicture() {
   div1.classList.add("img-container");
   div.appendChild(img);
   let p = document.createElement("p");
-  p.innerText = `Date : ${today.toLocaleTimeString()}`;
+  p.innerText = `Time : ${today.toLocaleTimeString()}`;
   div1.appendChild(h4);
   div1.appendChild(p);
   div1.appendChild(div);
   imageList.appendChild(div1);
 }
 
-function getDateTime() {
-  var today = new Date();
-  var todaysDate = today.toDateString().split(" ").join("_");
-  var todaysTime = today.toTimeString().split(" ");
-  var time = todaysTime[0].split(":").join("_");
-  return todaysDate.concat("_" + time);
-}
+// function getDateTime() {
+//   var today = new Date();
+//   var todaysDate = today.toDateString().split(" ").join("_");
+//   var todaysTime = today.toTimeString().split(" ");
+//   var time = todaysTime[0].split(":").join("_");
+//   return todaysDate.concat("_" + time);
+// }
 
 function saveImage(picture, dir) {
   // var link = document.getElementById('id-1');
@@ -84,3 +84,22 @@ count=count[0];
   });
   // link.click();
 }
+
+//to genarate the list of attached camera
+const genarate = () => {
+  var select = document.createElement("select");
+  select.name = "camera lists";
+  select.id = "camera";
+  console.log(labels);
+  let count = 0;
+  labels.forEach((val) => {
+    var option = document.createElement("option");
+    option.value = val != "" ? val : "camera " + count;
+    option.text = val != "" ? val : "camera " + count;
+    select.appendChild(option);
+  });
+  label.innerHTML = "Choose your camera: ";
+  label.htmlFor = "camera";
+
+  cameraList.appendChild(label).appendChild(select);
+};
