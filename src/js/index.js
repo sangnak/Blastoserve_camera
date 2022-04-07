@@ -139,54 +139,9 @@ navigator.mediaDevices
   });
 
 const label = document.createElement("label");
-// genarate();
-// function genarate() {
-//   var select = document.createElement("select");
-//   select.name = "camera lists";
-//   select.id = "camera";
-
-//   for (let i = 0; i < labels.length; i++) {
-//     console.log(labels[i]);
-//     const option = document.createElement("option");
-//     option.value = labels[i] != "" ? labels[i] : "camera ";
-//     option.text = labels[i] != "" ? labels[i] : "camera ";
-//     count += 1;
-//     option.key = index;
-//     select.appendChild(option);
-//   }
-
-//   // labels.forEach((val) => {
-//   //   console.log(val);
-//   //   var option = document.createElement("option");
-//   //   option.value = val != "" ? val : "camera " + count;
-//   //   option.text = val != "" ? val : "camera " + count;
-//   //   count += 1;
-//   //   option.key = index;
-//   //   select.appendChild(option);
-//   // });
-//   label.innerHTML = "Choose your camera: ";
-//   label.htmlFor = "camera";
-
-//   cameraList.appendChild(label).appendChild(select);
-// }
-
-// async function getMedia(constraints) {
-//   let stream = null;
-
-//   try {
-//     stream = await navigator.mediaDevices.getUserMedia(constraints);
-//     console.log(stream);
-//     /* use the stream */
-//   } catch(err) {
-//     /* handle the error */
-//     console.log(err);
-//   }
-// }
 
 //clear localstorage
 
 function startNewData() {
-  localStorage.removeItem("dir");
-  localStorage.removeItem("fname");
-  localStorage.removeItem("TOP");
+  localStorage.clear();
 }
