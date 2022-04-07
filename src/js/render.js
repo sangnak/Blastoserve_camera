@@ -15,9 +15,9 @@ var time = todaysTime[0].split(":").join("_");
 function handleChange() {
   fname = fname.value;
   submitButton.innerText = `${fname}`;
-  localStorage.setItem("fname", fname);
 }
 function saveData() {
+  localStorage.setItem("fname", submitButton.innerText);
   const dir = `./patient-details/${submitButton.innerText}_${todaysDate}_${time}`;
   if (!fs.existsSync(dir)) {
     fs.mkdirSync(dir, {
@@ -25,15 +25,16 @@ function saveData() {
     });
     document.getElementById("dir-save").innerText = dir;
     localStorage.setItem("dir", dir);
+    localStorage.setItem("TOP", TOP.value);
 
     let data = `
-  'First Name' : ${fname},
-  'Last Name' : ${lname.value},
-  'Contact Number' : ${parseInt(pnumber.value)},
-  'Type Of Procedure' : ${TOP.value}
-  
-  
-  `;
+    'First Name' : ${fname},
+    'Last Name' : ${lname.value},
+    'Contact Number' : ${parseInt(pnumber.value)},
+    'Type Of Procedure' : ${TOP.value}
+    
+    
+    `;
 
     fs.writeFile(`${dir}/${submitButton.innerText}.txt`, data, (err) => {
       if (err) console.log(err);

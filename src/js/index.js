@@ -3,6 +3,13 @@ const webcamElement = document.getElementById("webcam");
 const canvasElement = document.getElementById("canvas");
 const snapSoundElement = document.getElementById("snapSound");
 let imageList = document.getElementById("myImageList");
+let cameraList = document.getElementById("camera-list");
+let headingData = document.getElementById("heading-data");
+
+headingData.innerText = `${localStorage.getItem(
+  "fname"
+)}(${localStorage.getItem("TOP")})`;
+
 let newUser = "user";
 const webcam = new Webcam(
   webcamElement,
@@ -22,6 +29,7 @@ function startCamera() {
       console.log(err);
     });
 }
+
 startCamera();
 
 //take picture function
@@ -37,7 +45,6 @@ function takePicture() {
   let div = document.createElement("div");
   let div1 = document.createElement("div");
   img.src = picture;
-
 
   saveImage(picture, dir);
 
@@ -74,8 +81,8 @@ function saveImage(picture, dir) {
   let imageBuffer = decodedImg.data;
   let type = decodedImg.type;
   let extension = "png";
-let count =new Date().toTimeString().split(' ')
-count=count[0];
+  let count = new Date().toTimeString().split(" ");
+  count = count[0];
   let fileName = `image${count != 0 ? count : ""}.` + extension;
 
   fs.writeFile(`${dir}/` + fileName, imageBuffer, (err) => {
@@ -86,20 +93,100 @@ count=count[0];
 }
 
 //to genarate the list of attached camera
-const genarate = () => {
-  var select = document.createElement("select");
-  select.name = "camera lists";
-  select.id = "camera";
-  console.log(labels);
-  let count = 0;
-  labels.forEach((val) => {
-    var option = document.createElement("option");
-    option.value = val != "" ? val : "camera " + count;
-    option.text = val != "" ? val : "camera " + count;
-    select.appendChild(option);
-  });
-  label.innerHTML = "Choose your camera: ";
-  label.htmlFor = "camera";
 
-  cameraList.appendChild(label).appendChild(select);
-};
+let labels = [];
+let count = 0;
+navigator.mediaDevices
+  .enumerateDevices()
+  .then(function (devices) {
+    devices.forEach((device, index) => {
+      if (device.kind == "videoinput") {
+        console.log(
+          device.kind +
+            ": " +
+            device.label +
+            " id = " +
+            device.deviceId +
+            " group id = " +
+            device.groupId
+        );
+        // webcam.webcamList.push(device.deviceId);
+        labels.push(device.label);
+        console.log(labels);
+        var select = document.createElement("select");
+        select.name = "camera lists";
+        select.id = "camera";
+        labels.forEach((val) => {
+          console.log(webcam.selectCamera);
+
+          const option = document.createElement("option");
+          option.value = val != "" ? val : "camera " + count;
+          option.text = val != "" ? val : "camera " + count;
+          count += 1;
+          option.key = index;
+          select.appendChild(option);
+        });
+        labels.push(device.deviceId);
+        label.innerHTML = "Choose your camera: ";
+        label.htmlFor = "camera";
+
+        cameraList.appendChild(label).appendChild(select);
+      }
+    });
+  })
+  .catch(function (err) {
+    console.log(err.name + ": " + err.message);
+  });
+
+const label = document.createElement("label");
+// genarate();
+// function genarate() {
+//   var select = document.createElement("select");
+//   select.name = "camera lists";
+//   select.id = "camera";
+
+//   for (let i = 0; i < labels.length; i++) {
+//     console.log(labels[i]);
+//     const option = document.createElement("option");
+//     option.value = labels[i] != "" ? labels[i] : "camera ";
+//     option.text = labels[i] != "" ? labels[i] : "camera ";
+//     count += 1;
+//     option.key = index;
+//     select.appendChild(option);
+//   }
+
+//   // labels.forEach((val) => {
+//   //   console.log(val);
+//   //   var option = document.createElement("option");
+//   //   option.value = val != "" ? val : "camera " + count;
+//   //   option.text = val != "" ? val : "camera " + count;
+//   //   count += 1;
+//   //   option.key = index;
+//   //   select.appendChild(option);
+//   // });
+//   label.innerHTML = "Choose your camera: ";
+//   label.htmlFor = "camera";
+
+//   cameraList.appendChild(label).appendChild(select);
+// }
+
+// async function getMedia(constraints) {
+//   let stream = null;
+
+//   try {
+//     stream = await navigator.mediaDevices.getUserMedia(constraints);
+//     console.log(stream);
+//     /* use the stream */
+//   } catch(err) {
+//     /* handle the error */
+//     console.log(err);
+//   }
+// }
+
+//clear localstorage
+
+function startNewData() {
+  localStorage.removeItem("dir");
+  localStorage.removeItem("fname");
+  localStorage.removeItem("TOP");
+}

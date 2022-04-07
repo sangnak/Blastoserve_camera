@@ -10,11 +10,18 @@
       integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3"
       crossorigin="anonymous"
     />
+
     <link rel="stylesheet" href="../css/index.css" />
   </head>
   <body>
     <section class="container my-5 py-3">
-      <div class="row">
+      <div
+        class="d-flex justify-content-center"
+        style="width: 100%; margin: 0 auto"
+      >
+        <h1 id="heading-data"></h1>
+      </div>
+      <div class="row mt-5">
         <div class="col-md-4">
           <div
             class="container d-flex justify-content-center"
@@ -45,23 +52,34 @@
             <a
               href="./blastoserve_ad.html"
               class="btn btn-light mt-3 px-4 border border-primary py-3 w-500"
+              onclick="startNewData()"
             >
               Stop taking data
             </a>
           </div>
         </div>
-        <div class="col-md-8" onclick="takePicture()">
-          <video id="webcam" autoplay playsinline></video>
+        <div class="col-md-8">
+          <div
+            id="camera-list"
+            class="d-flex justify-content-center mb-4 ms-5"
+            style="width: 100%"
+          ></div>
+          <video
+            id="webcam"
+            autoplay
+            playsinline
+            onclick="takePicture()"
+          ></video>
           <canvas id="canvas" class="d-none"></canvas>
           <audio
             id="snapSound"
-            src="./assets/audio/snap.mp3"
+            src="../assets/audio/snap.mp3"
             preload="auto"
           ></audio>
         </div>
       </div>
     </section>
-<a  id="id-1"></a>
+    <a id="id-1"></a>
     <section class="container">
       <!-- <div class="card p-1 border border-light rounded" style="width: 18rem">
         <h5 class="card-title">Card title</h5>
