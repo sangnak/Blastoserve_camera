@@ -1,8 +1,7 @@
+const fs = require("fs");
 const webcamElement = document.getElementById("webcam");
 const canvasElement = document.getElementById("canvas");
 const snapSoundElement = document.getElementById("snapSound");
-let submitButton = document.getElementById("submit_button");
-
 let imageList = document.getElementById("myImageList");
 let newUser = "user";
 const webcam = new Webcam(
@@ -11,6 +10,7 @@ const webcam = new Webcam(
   canvasElement,
   snapSoundElement
 );
+let fname = localStorage.getItem("fname");
 
 function startCamera() {
   webcam
@@ -22,15 +22,13 @@ function startCamera() {
       console.log(err);
     });
 }
-
 startCamera();
-
-
 
 //take picture function
 function takePicture() {
   var picture = webcam.snap();
-var today=new Date()
+  var today = new Date();
+  let dir = localStorage.getItem("dir");
 
   let h4 = document.createElement("h4");
   // fname = fname.value;
@@ -39,6 +37,10 @@ var today=new Date()
   let div = document.createElement("div");
   let div1 = document.createElement("div");
   img.src = picture;
+
+
+  saveImage(picture, dir);
+
   img.alt = "image/png";
   div1.classList.add("img-container");
   div.appendChild(img);
@@ -56,4 +58,29 @@ function getDateTime() {
   var todaysTime = today.toTimeString().split(" ");
   var time = todaysTime[0].split(":").join("_");
   return todaysDate.concat("_" + time);
+}
+
+function saveImage(picture, dir) {
+  // var link = document.getElementById('id-1');
+  // // link.download = "test.png";
+  // link.href = picture;
+  // const fileContents = new Buffer(picture, "base64");
+  var matches = picture.match(/^data:([A-Za-z-+/]+);base64,(.+)$/),
+    response = {};
+
+  response.type = matches[1];
+  response.data = new Buffer(matches[2], "base64");
+  let decodedImg = response;
+  let imageBuffer = decodedImg.data;
+  let type = decodedImg.type;
+  let extension = "png";
+let count =new Date().toTimeString().split(' ')
+count=count[0];
+  let fileName = `image${count != 0 ? count : ""}.` + extension;
+
+  fs.writeFile(`${dir}/` + fileName, imageBuffer, (err) => {
+    if (err) return console.error(err);
+    console.log("file saved to ");
+  });
+  // link.click();
 }

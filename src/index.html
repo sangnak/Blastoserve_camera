@@ -20,7 +20,7 @@
         <form>
           <div class="mb-3">
             <label for="fname" class="form-label mx-lg-3 my-2">First Name :</label>
-            <input type="text" class="form-control" id="fname" name="fname" onchange="handleChange()" />
+            <input type="text" class="form-control" id="fname" name="fname" onchange="handleChange()" required />
            
           </div>
           <div class="mb-3">
@@ -30,6 +30,7 @@
               class="form-control"
               id="lname"
               name="lname"
+              required
             />
           </div>
           <div class="mb-3">
@@ -39,16 +40,18 @@
               class="form-control"
               id="pnumber"
               name="pnumber"
+              required
             />
           </div>
           </div>
           <div class="container d-flex justify-content-center" style="width: 100%;">
-            <a href="./pages/patient_camera.html"  id="submit_button" class="btn btn-green mt-3 px-5"> 
-              start capturing data &lt;patient name&gt;
-           
-          </a>
+            <button class="btn btn-green mt-3 px-5" onclick="saveData()"> 
+              start capturing data &lt;<span id="submit_button" >patient name</span>&gt;
+          </button>
           </div>
         </form>
+
+        <p id="dir-save"></p>
       </div>
     </section>
     
