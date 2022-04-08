@@ -1,6 +1,6 @@
 {
-  "name": "version_1.0",
-  "productName": "version_1.0",
+  "name": "blastoserve_camera",
+  "productName": "Blastoserve Camera",
   "version": "1.0.0",
   "description": "My Electron application description",
   "main": "src/index.js",

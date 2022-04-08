@@ -82,7 +82,7 @@ function saveImage(picture, dir) {
   let type = decodedImg.type;
   let extension = "png";
   let count = new Date().toTimeString().split(" ");
-  count = count[0];
+  count = count[0].split(":").join("_");
   let fileName = `image${count != 0 ? count : ""}.` + extension;
 
   fs.writeFile(`${dir}/${fileName}`, imageBuffer, (err) => {
