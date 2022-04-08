@@ -17,32 +17,35 @@ function handleChange() {
   submitButton.innerText = `${fname}`;
 }
 function saveData() {
-  localStorage.setItem("fname", submitButton.innerText);
-  const dir = `./patient-details/${submitButton.innerText}_${todaysDate}_${time}`;
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, {
-      recursive: true,
-    });
-    //document.getElementById("dir-save").innerText = dir;
-    localStorage.setItem("dir", dir);
-    localStorage.setItem("TOP", TOP.value);
 
-    let data = `
-    'First Name' : ${fname},
-    'Last Name' : ${lname.value},
-    'Contact Number' : ${parseInt(pnumber.value)},
-    'Type Of Procedure' : ${TOP.value}
-    
-    
-    `;
+  if(fname.value != "" && lname.value != "" && pnumber.value != "" && TOP.value != "") {
+    localStorage.setItem("fname", submitButton.innerText);
+    const dir = `./patient-details/${submitButton.innerText}_${todaysDate}_${time}`;
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir, {
+        recursive: true,
+      });
+      //document.getElementById("dir-save").innerText = dir;
+      localStorage.setItem("dir", dir);
+      localStorage.setItem("TOP", TOP.value);
 
-    fs.writeFile(`${dir}/${submitButton.innerText}.txt`, data, (err) => {
-      if (err) console.log(err);
-      else {
-        console.log("File written successfully\n");
+      let data = `
+      'First Name' : ${fname},
+      'Last Name' : ${lname.value},
+      'Contact Number' : ${parseInt(pnumber.value)},
+      'Type Of Procedure' : ${TOP.value}
+      
+      
+      `;
 
-        location.href = "./pages/patient_camera.html";
-      }
-    });
+      fs.writeFile(`${dir}/${submitButton.innerText}.txt`, data, (err) => {
+        if (err) console.log(err);
+        else {
+          console.log("File written successfully\n");
+
+          location.href = "./pages/patient_camera.html";
+        }
+      });
+    }
   }
 }
