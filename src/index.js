@@ -24,7 +24,9 @@ const createWindow = () => {
   mainWindow.loadFile("./src/index.html");
 
   // Open the DevTools.
-  mainWindow.webContents.openDevTools();
+
+  //We want the dev tools option only during production
+  // mainWindow.webContents.openDevTools();
 };
 
 // This method will be called when Electron has finished

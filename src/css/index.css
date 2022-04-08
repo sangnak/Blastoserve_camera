@@ -55,3 +55,10 @@ body {
   justify-content: center;
   margin: 0 auto;
 }
+
+/* Uncomment this to horizontally flip the camera, though the image saved is as original */
+
+/* video {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+} */
