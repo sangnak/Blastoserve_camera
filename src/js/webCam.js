@@ -34,7 +34,6 @@ class Webcam {
       }),
       1 == this._webcamList.length && (this._facingMode = "user"),
       this._webcamList
-      
     );
   }
   getMediaConstraints() {
