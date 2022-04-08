@@ -23,7 +23,7 @@ function saveData() {
     fs.mkdirSync(dir, {
       recursive: true,
     });
-    document.getElementById("dir-save").innerText = dir;
+    //document.getElementById("dir-save").innerText = dir;
     localStorage.setItem("dir", dir);
     localStorage.setItem("TOP", TOP.value);
 
