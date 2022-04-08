@@ -85,9 +85,9 @@ function saveImage(picture, dir) {
   count = count[0];
   let fileName = `image${count != 0 ? count : ""}.` + extension;
 
-  fs.writeFile(`${dir}/` + fileName, imageBuffer, (err) => {
+  fs.writeFile(`${dir}/${fileName}`, imageBuffer, (err) => {
     if (err) return console.error(err);
-    console.log("file saved to ");
+    console.log("file saved to ", `${dir}/${fileName}`);
   });
   // link.click();
 }

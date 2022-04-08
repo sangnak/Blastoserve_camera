@@ -42,7 +42,7 @@ jspm_packages
 src/js/js
 src/sample.js
 patient-details
-
+src/js/slider.js
 # TypeScript v1 declaration files
 typings/
 
