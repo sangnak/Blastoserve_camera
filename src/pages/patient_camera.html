@@ -11,6 +11,7 @@
       crossorigin="anonymous"
     />
     <link rel="stylesheet" href="../css/index.css" />
+    
   </head>
   <body>
     <section class="container my-5 py-3">
@@ -22,7 +23,6 @@
       </div>
       <div class="row mt-5">
         <div class="col-md-4 my-auto">
-
           <div
             class="container d-flex justify-content-center"
             style="width: 100%"
@@ -35,34 +35,14 @@
             </button>
           </div>
 
-          <!-- Recording UI Starts here -->
-
           <div class="container d-flex justify-content-center" style="width: 100%">
-            <div id="startButton" class="button btn btn-danger mt-3 px-4 border border-primary py-3 w-500">
+            <button id="record" class="btn btn-danger mt-3 px-4 border border-primary py-3 w-500">
               Start Recording
-            </div>
-            <div id="stopButton" class="button btn btn-danger mt-3 px-4 border border-primary py-3 w-500" style="display: none">
-              Stop Recording
-            </div>
+            </button>
           </div>
 
-          <div class="container d-flex justify-content-center">
-            <!-- <div class="m-1">
-              <h6>When Start Recording button is clicked it records for 5 seconds, thats the time specified in index.js file in var recordingTimeMS. This is a problem, user needs to specify the amount of time of video. When time is increased to say 50 seconds it takes more time to software to process the video which is a problem, comment line 50,51 and 52 in patient_camera.html to see the app without this information</h6>
-            </div> -->
-            <div class="m-1">
-              <h2>Recording</h2>
-              <video id="recording" width="160" height="120" controls></video>
-            </div>
+          <div id="stopwatch" class="container d-flex justify-content-center" style="display: none ;width: 100%">
           </div>
-
-          <div class="container d-flex justify-content-center" style="width: 100%">
-            <a id="downloadButton" class="button btn btn-green mt-3 px-4 border border-primary py-3 w-500">
-              Save Video
-            </a>
-          </div>
-
-          <!-- Recording UI Ends here    -->
 
           <div
             class="container d-flex justify-content-center"
@@ -88,7 +68,7 @@
               Stop taking data
             </a>
           </div>
-
+         
         </div>
         <div class="col-md-8">
           <div
@@ -104,6 +84,7 @@
             onclick="takePicture()"
             width="900"
             height="auto"
+            class="webcam-video"
           ></video>
           <canvas id="canvas" class="d-none"></canvas>
           <audio

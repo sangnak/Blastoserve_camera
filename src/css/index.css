@@ -2,7 +2,8 @@ body {
   font-family: BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
     sans-serif;
   margin: 0;
-
+  text-decoration: none;
+  text-transform: capitalize;
   padding: 0;
   box-sizing: border-box;
   background-color: rgba(0, 0, 0, 0.089);
@@ -42,24 +43,83 @@ body {
 
   flex-direction: row;
 }
-.img-container {
+.img-container ,.video-container {
   margin: 10px 20px;
   padding: 8px 15px;
+  border: rgba(0, 0, 0, 0.089) solid 2px;
 }
-.img-container h4 {
-  font-size: medium;
-}
-.img-container img {
+
+#myImageList img {
   width: 200px;
   display: flex;
   justify-content: center;
   margin: 0 auto;
+  border-radius: 5%;
 }
 
-/* Uncomment this to horizontally flip the camera, though the image saved is as original */
-/* Warning!!! : Recoding UI gets flipped horizontally when uncomment below line */
+#myImageList h4 {
+  font-size: large;
+  font-weight: bold;
+}
+#myImageList p {
+  font-size: large;
+}
+#myImageList video {
+  width: 200px;
+  height: auto;
+  border-radius: 2%;
+}
+
+
 
 /* video {
   -webkit-transform: scaleX(-1);
   transform: scaleX(-1);
+} */
+
+/* Uncomment this to horizontally flip the camera, though the image saved is as original
+
+/* @media screen and (max-width: 800px) {
+  .webcam-video {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  #myImageList {
+    width: 100% !important;
+    margin: 10px auto;
+  }
+  .img-container {
+    width: 45% !important;
+  }
+}
+@media screen and (max-width: 1441px) {
+  .webcam-video {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .img-container {
+    text-align: center;
+    border-radius: 2%;
+    border: rgba(0, 0, 0, 0.089) solid 2px;
+    width: 30%;
+    display: inline-grid;
+    justify-content: space-between;
+  }
+  .img-container img {
+    width: 100%;
+    margin: 0;
+    padding: 2%;
+  }
+}
+@media screen and (max-width: 500px) {
+  .webcam-video {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .img-container {
+    width: 100% !important;
+  }
 } */

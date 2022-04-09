@@ -6,10 +6,11 @@ let imageList = document.getElementById("myImageList");
 let cameraList = document.getElementById("camera-list");
 let headingData = document.getElementById("heading-data");
 
+let select = document.querySelector(".select-list");
 headingData.innerText = `${localStorage.getItem(
   "fname"
 )}(${localStorage.getItem("TOP")})`;
-
+var today = new Date();
 let newUser = "user";
 const webcam = new Webcam(
   webcamElement,
@@ -19,23 +20,73 @@ const webcam = new Webcam(
 );
 let fname = localStorage.getItem("fname");
 
-function startCamera() {
-  webcam
-    .start()
-    .then((result) => {
-      console.log("webcam started");
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+// startCamera();
+const videoConstraits = true;
+
+const constraints = {
+  audio: false,
+  video: videoConstraits,
+};
+
+//to genarate the list of attached camera
+navigator.mediaDevices
+  .getUserMedia(constraints)
+  .then((stream) => {
+    window.stream = stream;
+    webcamElement.srcObject = stream;
+    return navigator.mediaDevices.enumerateDevices();
+  })
+  .then(gotDevices)
+  .catch((error) => {
+    console.error(error);
+  });
+let getImage = document.getElementById("get-image");
+let labels = [];
+let count = 0;
+function gotDevices(devices) {
+  devices.forEach((device, index) => {
+    if (device.kind == "videoinput") {
+      console.log(
+        device.kind +
+          ": " +
+          device.label +
+          " id = " +
+          device.deviceId +
+          " group id = " +
+          device.groupId
+      );
+      // webcam.webcamList.push(device.deviceId);
+      labels.push(device.deviceId);
+      console.log(labels);
+      var select = document.createElement("select");
+      select.classList.add("select-list");
+      select.name = "camera lists";
+      select.id = "camera";
+      labels.forEach((val) => {
+        console.log(webcam.selectCamera);
+
+        const option = document.createElement("option");
+        option.value = val != "" ? val : "camera " + count;
+        option.text = val != "" ? val : "camera " + count;
+        count += 1;
+        option.key = index;
+        select.appendChild(option);
+      });
+      labels.push(device.deviceId);
+      label.innerHTML = "Choose your camera: ";
+      label.htmlFor = "camera";
+
+      cameraList.appendChild(label).appendChild(select);
+    }
+  });
 }
 
-startCamera();
+const label = document.createElement("label");
 
 //take picture function
 function takePicture() {
   var picture = webcam.snap();
-  var today = new Date();
+
   let dir = localStorage.getItem("dir");
 
   let h4 = document.createElement("h4");
@@ -82,8 +133,9 @@ function saveImage(picture, dir) {
   let type = decodedImg.type;
   let extension = "png";
   let count = new Date().toTimeString().split(" ");
+  console.log(count);
   count = count[0].split(":").join("_");
-  let fileName = `image${count != 0 ? count : ""}.` + extension;
+  let fileName = `image_${count}.` + extension;
 
   fs.writeFile(`${dir}/${fileName}`, imageBuffer, (err) => {
     if (err) return console.error(err);
@@ -92,171 +144,182 @@ function saveImage(picture, dir) {
   // link.click();
 }
 
-//to genarate the list of attached camera
-// let select = document.querySelector(".select-list");
-// let getImage = document.getElementById("get-image");
-// let labels = [];
-// let count = 0;
-// function gotDevices(devices) {
-//   devices.forEach((device, index) => {
-//     if (device.kind == "videoinput") {
-//       console.log(
-//         device.kind +
-//           ": " +
-//           device.label +
-//           " id = " +
-//           device.deviceId +
-//           " group id = " +
-//           device.groupId
-//       );
-//       // webcam.webcamList.push(device.deviceId);
-//       labels.push(device.label);
-//       console.log(labels);
-//       var select = document.createElement("select");
-//       select.classList.add("select-list");
-//       select.name = "camera lists";
-//       select.id = "camera";
-//       labels.forEach((val) => {
-//         console.log(webcam.selectCamera);
+//Recording
 
-//         const option = document.createElement("option");
-//         option.value = val != "" ? val : "camera " + count;
-//         option.text = val != "" ? val : "camera " + count;
-//         count += 1;
-//         option.key = index;
-//         select.appendChild(option);
-//       });
-//       labels.push(device.deviceId);
-//       label.innerHTML = "Choose your camera: ";
-//       label.htmlFor = "camera";
+const recordButton = document.querySelector("#record");
+const timer = document.querySelector("#stopwatch");
 
-//       cameraList.appendChild(label).appendChild(select);
-//     }
-//   });
-// }
+let mediaRecorder;
+let recordedBlobs;
+recordButton.addEventListener("click", () => {
+  console.log(recordButton.textContent);
+  if (recordButton.innerText == "Start Recording") {
+    
+    startRecording();
 
-// navigator.mediaDevices
-//   .enumerateDevices()
-//   .then(gotDevices)
-//   .catch(function (err) {
-//     console.log(err.name + ": " + err.message);
-//   });
+    recordButton.textContent = "Stop Recording";
 
-// const constraints = {
-//   video: true,
-//   audio: false,
-// };
-// navigator.mediaDevices
-//   .getUserMedia(constraints)
-//   .then((stream) => {
-//     currentStream = stream;
-//     webcamElement.srcObject = stream;
-//     return navigator.mediaDevices.enumerateDevices();
-//   })
-//   .then(gotDevices)
-//   .catch((error) => {
-//     console.error(error);
-//   });
+    console.log(recordButton);
 
-// const label = document.createElement("label");
+    recordButton.className =
+      "btn btn-light mt-3 px-4 border border-primary py-3 w-500 text-danger";
+  } else {
+    stopRecording();
+    recordButton.textContent = "Start Recording";
+    recordButton.className =
+      "btn btn-danger mt-3 px-4 border border-primary py-3 w-500";
+  }
+});
 
+//function start recording
+function startRecording() {
+  alert("recording started");
+  timer.style.display = "block";
+  startTimer();
+  
+
+  recordedBlobs = [];
+  let options = { mimeType: "video/webm;codecs=vp9,opus" };
+  try {
+    mediaRecorder = new MediaRecorder(window.stream, options);
+  } catch (e) {
+    console.error("Exception while creating MediaRecorder:", e);
+    errorMsgElement.innerHTML = `Exception while creating MediaRecorder: ${JSON.stringify(
+      e
+    )}`;
+    return;
+  }
+
+  console.log("Created MediaRecorder", mediaRecorder, "with options", options);
+  recordButton.textContent = "Stop Recording";
+
+  mediaRecorder.onstop = (event) => {
+    console.log("Recorder stopped: ", event);
+    console.log("Recorded Blobs: ", recordedBlobs);
+  };
+  mediaRecorder.ondataavailable = handleDataAvailable;
+  mediaRecorder.start();
+  console.log("MediaRecorder started", mediaRecorder);
+  mediaRecorder.addEventListener("stop", playVideo);
+}
+
+function handleDataAvailable(event) {
+  console.log("handleDataAvailable", event);
+  if (event.data && event.data.size > 0) {
+    recordedBlobs.push(event.data);
+  }
+}
+
+function stopRecording() {
+  alert("recording stopped and saved automatically");
+  stopTimer();
+  resetTimer();
+  timer.style.display = "none";
+  timer.innerText = "";
+  mediaRecorder.stop();
+}
+
+function playVideo() {
+  const superBuffer = new Blob(recordedBlobs, { type: "video/webm" });
+
+  let h4 = document.createElement("h4");
+
+  h4.innerText = `patient name : ${fname}`;
+  let video = document.createElement("video");
+  let div = document.createElement("div");
+  let div1 = document.createElement("div");
+  video.src = null;
+  video.srcObject = null;
+  video.src = window.URL.createObjectURL(superBuffer);
+  let dir = localStorage.getItem("dir");
+  saveVideo(dir);
+  video.controls = true;
+  video.autoplay = true;
+  video.muted = true;
+  video.loop = true;
+  video.play();
+  div1.classList.add("video-container");
+  div.appendChild(video);
+  let p = document.createElement("p");
+  p.innerText = `Time : ${today.toLocaleTimeString()}`;
+  div1.appendChild(h4);
+  div1.appendChild(p);
+  div1.appendChild(div);
+  imageList.appendChild(div1);
+}
+
+async function saveVideo(dir) {
+  const blob = new Blob(recordedBlobs, { type: "video/mp4" });
+  const buffer = Buffer.from(await blob.arrayBuffer());
+  let count = new Date().toTimeString().split(" ");
+
+  count = count[0].split(":").join("_");
+  fs.writeFile(`${dir}/video_${count}.mp4`, buffer, (err) => {
+    if (err) return console.error(err);
+    console.log("file saved to ", `${dir}/video.mp4`);
+  });
+}
 //clear localstorage
 
 function startNewData() {
   localStorage.clear();
 }
 
-// //New Recording functionality
+var hr = 0;
+var min = 0;
+var sec = 0;
+var stoptime = true;
 
-let preview = document.getElementById("webcam");
-let recording = document.getElementById("recording");
-let startButton = document.getElementById("startButton");
-let stopButton = document.getElementById("stopButton");
-let downloadButton = document.getElementById("downloadButton");
-let logElement = document.getElementById("log");
-
-let recordingTimeMS = 5000;
-// 1000 = 1 second
-
-function log(msg) {
-  //logElement.innerHTML += msg + "\n";
+function startTimer() {
+  if (stoptime == true) {
+    stoptime = false;
+    timerCycle();
+  }
+}
+function stopTimer() {
+  if (stoptime == false) {
+    stoptime = true;
+  }
 }
 
-function wait(delayInMS) {
-  return new Promise((resolve) => setTimeout(resolve, delayInMS));
+function timerCycle() {
+  if (stoptime == false) {
+    sec = parseInt(sec);
+    min = parseInt(min);
+    hr = parseInt(hr);
+
+    sec = sec + 1;
+
+    if (sec == 60) {
+      min = min + 1;
+      sec = 0;
+    }
+    if (min == 60) {
+      hr = hr + 1;
+      min = 0;
+      sec = 0;
+    }
+
+    if (sec < 10 || sec == 0) {
+      sec = "0" + sec;
+    }
+    if (min < 10 || min == 0) {
+      min = "0" + min;
+    }
+    if (hr < 10 || hr == 0) {
+      hr = "0" + hr;
+    }
+
+    timer.innerHTML = hr + ":" + min + ":" + sec;
+
+    setTimeout("timerCycle()", 1000);
+  }
 }
 
-let recorder;
-function startRecording(stream, lengthInMS) {
-  recorder = new MediaRecorder(stream);
-  let data = [];
-
-  recorder.ondataavailable = (event) => data.push(event.data);
-  recorder.start();
-  log(recorder.state + " for " + lengthInMS / 1000 + " seconds...");
-
-  let stopped = new Promise((resolve, reject) => {
-    recorder.onstop = resolve;
-    recorder.onerror = (event) => reject(event.name);
-  });
-
-  // let recorded = wait(lengthInMS).then(
-  //   () => recorder.state == "recording" && recorder.stop()
-  // );
-
-  return Promise.all([stopped, true]).then(() => data);
+function resetTimer() {
+  timer.innerHTML = "00:00:00";
+  stoptime = true;
+  hr = 0;
+  sec = 0;
+  min = 0;
 }
-
-function stop(stream) {
-  recorder.stop();
-  // stream.getTracks().forEach((track) => track.stop());
-}
-
-startButton.addEventListener(
-  "click",
-  function () {
-    startButton.style.display = "none";
-    stopButton.style.display = "block";
-
-    navigator.mediaDevices
-      .getUserMedia({
-        video: true,
-        audio: false,
-      })
-      .then((stream) => {
-        preview.srcObject = stream;
-        downloadButton.href = stream;
-        preview.captureStream =
-          preview.captureStream || preview.mozCaptureStream;
-        return new Promise((resolve) => (preview.onplaying = resolve));
-      })
-      .then(() => startRecording(preview.captureStream(), recordingTimeMS))
-      .then((recordedChunks) => {
-        let recordedBlob = new Blob(recordedChunks, { type: "video/webm" });
-        recording.src = URL.createObjectURL(recordedBlob);
-        downloadButton.href = recording.src;
-        downloadButton.download = "RecordedVideo.webm";
-
-        log(
-          "Successfully recorded " +
-            recordedBlob.size +
-            " bytes of " +
-            recordedBlob.type +
-            " media."
-        );
-      })
-      .catch(log);
-  },
-  false
-);
-
-stopButton.addEventListener(
-  "click",
-  function () {
-    stopButton.style.display = "none";
-    startButton.style.display = "block";
-    
-    stop(preview.srcObject);
-  },
-  false
-);
