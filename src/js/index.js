@@ -186,8 +186,9 @@ function wait(delayInMS) {
   return new Promise((resolve) => setTimeout(resolve, delayInMS));
 }
 
+let recorder;
 function startRecording(stream, lengthInMS) {
-  let recorder = new MediaRecorder(stream);
+  recorder = new MediaRecorder(stream);
   let data = [];
 
   recorder.ondataavailable = (event) => data.push(event.data);
@@ -199,20 +200,24 @@ function startRecording(stream, lengthInMS) {
     recorder.onerror = (event) => reject(event.name);
   });
 
-  let recorded = wait(lengthInMS).then(
-    () => recorder.state == "recording" && recorder.stop()
-  );
+  // let recorded = wait(lengthInMS).then(
+  //   () => recorder.state == "recording" && recorder.stop()
+  // );
 
-  return Promise.all([stopped, recorded]).then(() => data);
+  return Promise.all([stopped, true]).then(() => data);
 }
 
 function stop(stream) {
-  stream.getTracks().forEach((track) => track.stop());
+  recorder.stop();
+  // stream.getTracks().forEach((track) => track.stop());
 }
 
 startButton.addEventListener(
   "click",
   function () {
+    startButton.style.display = "none";
+    stopButton.style.display = "block";
+
     navigator.mediaDevices
       .getUserMedia({
         video: true,
@@ -248,6 +253,9 @@ startButton.addEventListener(
 stopButton.addEventListener(
   "click",
   function () {
+    stopButton.style.display = "none";
+    startButton.style.display = "block";
+    
     stop(preview.srcObject);
   },
   false
