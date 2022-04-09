@@ -35,30 +35,34 @@
             </button>
           </div>
 
-          <!-- <div
-            class="container d-flex justify-content-center"
-            style="width: 100%"
-          >
-            <button id="start-camera" 
-            class="btn btn-danger mt-3 px-4 border border-primary py-3 w-500">
-              Start Camera
-            </button>
-            <button id="start-record"
-              class="btn btn-danger mt-3 px-4 border border-primary py-3 w-500"
-            >
-              Click here to start recording 
-            </button>
-            <button id="stop-record" 
-            style="display: none;"
-            class="btn btn-danger mt-3 px-4 border border-primary py-3 w-500">
-              Stop recording
-            </button>
-            <button id="download-video" 
-            style="display: none;"
-            class="btn btn-danger mt-3 px-4 border border-primary py-3 w-500">
-              Save video
-            </button>
-          </div> -->
+          <!-- Recording UI Starts here -->
+
+          <div class="container d-flex justify-content-center" style="width: 100%">
+            <div id="startButton" class="button btn btn-danger mt-3 px-4 border border-primary py-3 w-500">
+              Start Recording
+            </div>
+            <div id="stopButton" class="button btn btn-danger mt-3 px-4 border border-primary py-3 w-500">
+              Stop Recording
+            </div>
+          </div>
+
+          <div class="container d-flex justify-content-center">
+            <div class="m-1">
+              <h6>When Start Recording button is clicked it records for 5 seconds, thats the time specified in index.js file in var recordingTimeMS. This is a problem, user needs to specify the amount of time of video. When time is increased to say 50 seconds it takes more time to software to process the video which is a problem, comment line 50,51 and 52 in patient_camera.html to see the app without this information</h6>
+            </div>
+            <div class="m-1">
+              <h2>Recording</h2>
+              <video id="recording" width="160" height="120" controls></video>
+            </div>
+          </div>
+
+          <div class="container d-flex justify-content-center" style="width: 100%">
+            <a id="downloadButton" class="button btn btn-green mt-3 px-4 border border-primary py-3 w-500">
+              Save Video
+            </a>
+          </div>
+
+          <!-- Recording UI Ends here    -->
 
           <div
             class="container d-flex justify-content-center"

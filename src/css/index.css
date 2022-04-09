@@ -57,6 +57,7 @@ body {
 }
 
 /* Uncomment this to horizontally flip the camera, though the image saved is as original */
+/* Warning!!! : Recoding UI gets flipped horizontally when uncomment below line */
 
 /* video {
   -webkit-transform: scaleX(-1);

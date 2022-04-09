@@ -168,47 +168,87 @@ function startNewData() {
 
 // //New Recording functionality
 
-// let camera_button = document.querySelector("#start-camera");
-// let video = document.querySelector("#video");
-// let start_button = document.querySelector("#start-record");
-// let stop_button = document.querySelector("#stop-record");
-// let download_link = document.querySelector("#download-video");
+let preview = document.getElementById("webcam");
+let recording = document.getElementById("recording");
+let startButton = document.getElementById("startButton");
+let stopButton = document.getElementById("stopButton");
+let downloadButton = document.getElementById("downloadButton");
+let logElement = document.getElementById("log");
 
-// let camera_stream = null;
-// let media_recorder = null;
-// let blobs_recorded = [];
+let recordingTimeMS = 5000;
+// 1000 = 1 second
 
-// camera_button.addEventListener('click', async function() {
-//   camera_stream = await webcam.stream();
-// 	video.srcObject = camera_stream;
-// });
+function log(msg) {
+  //logElement.innerHTML += msg + "\n";
+}
 
-// start_button.addEventListener('click', function() {
-//     // set MIME type of recording as video/webm
-//     media_recorder = new MediaRecorder(camera_stream, { mimeType: 'video/webm' });
+function wait(delayInMS) {
+  return new Promise((resolve) => setTimeout(resolve, delayInMS));
+}
 
-//     // event : new recorded video blob available 
-//     media_recorder.addEventListener('dataavailable', function(e) {
-// 		blobs_recorded.push(e.data);
-//     });
+function startRecording(stream, lengthInMS) {
+  let recorder = new MediaRecorder(stream);
+  let data = [];
 
-//     // event : recording stopped & all blobs sent
-//     media_recorder.addEventListener('stop', function() {
-//   	// create local object URL from the recorded video blobs
-//     let video_local = URL.createObjectURL(new Blob(blobs_recorded, { type: 'video/webm' }));
-//     download_link.href = video_local;
+  recorder.ondataavailable = (event) => data.push(event.data);
+  recorder.start();
+  log(recorder.state + " for " + lengthInMS / 1000 + " seconds...");
 
-//     stop_button.style.display = 'none';
-//     download_link.style.display = 'block';
-//     });
+  let stopped = new Promise((resolve, reject) => {
+    recorder.onstop = resolve;
+    recorder.onerror = (event) => reject(event.name);
+  });
 
-//     // start recording with each recorded blob having 1 second video
-//     media_recorder.start(1000);
+  let recorded = wait(lengthInMS).then(
+    () => recorder.state == "recording" && recorder.stop()
+  );
 
-//     start_button.style.display = 'none'
-//     stop_button.style.display = 'block';
-// });
+  return Promise.all([stopped, recorded]).then(() => data);
+}
 
-// stop_button.addEventListener('click', function() {
-// 	media_recorder.stop(); 
-// });
+function stop(stream) {
+  stream.getTracks().forEach((track) => track.stop());
+}
+
+startButton.addEventListener(
+  "click",
+  function () {
+    navigator.mediaDevices
+      .getUserMedia({
+        video: true,
+        audio: false,
+      })
+      .then((stream) => {
+        preview.srcObject = stream;
+        downloadButton.href = stream;
+        preview.captureStream =
+          preview.captureStream || preview.mozCaptureStream;
+        return new Promise((resolve) => (preview.onplaying = resolve));
+      })
+      .then(() => startRecording(preview.captureStream(), recordingTimeMS))
+      .then((recordedChunks) => {
+        let recordedBlob = new Blob(recordedChunks, { type: "video/webm" });
+        recording.src = URL.createObjectURL(recordedBlob);
+        downloadButton.href = recording.src;
+        downloadButton.download = "RecordedVideo.webm";
+
+        log(
+          "Successfully recorded " +
+            recordedBlob.size +
+            " bytes of " +
+            recordedBlob.type +
+            " media."
+        );
+      })
+      .catch(log);
+  },
+  false
+);
+
+stopButton.addEventListener(
+  "click",
+  function () {
+    stop(preview.srcObject);
+  },
+  false
+);
