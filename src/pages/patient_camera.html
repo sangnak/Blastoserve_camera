@@ -8,15 +8,25 @@
     <link rel="stylesheet" href="../css/index.css" />
   </head>
   <body>
+
+    <!-- Title Buttons and webcam preview -->
     <section class="container my-5 py-3">
+
       <div
         class="d-flex justify-content-center"
         style="width: 100%; margin: 0 auto"
       >
+
+        <!-- Patient name and procedure -->
         <h1 id="heading-data"></h1>
       </div>
+
       <div class="row mt-5">
+
+        <!-- Button on left side  -->
         <div class="col-md-4 my-auto">
+
+          <!-- Photo Button    -->
           <div
             class="container d-flex justify-content-center"
             style="width: 100%"
@@ -25,19 +35,31 @@
               class="btn btn-green mt-3 px-4 border border-primary py-3 w-500"
               onclick="takePicture()"
             >
-              Click here or on Image to take photos
+              Click here or on image to take photos
             </button>
           </div>
 
-          <div class="container d-flex justify-content-center" style="width: 100%">
-            <button id="record" class="btn btn-danger mt-3 px-4 border border-primary py-3 w-500">
+          <!-- Video Button   -->
+          <div
+            class="container d-flex justify-content-center"
+            style="width: 100%"
+          >
+            <button
+              id="record"
+              class="btn btn-danger mt-3 px-4 border border-primary py-3 w-500"
+            >
               Start Recording
             </button>
           </div>
 
-          <div id="stopwatch" class="container d-flex justify-content-center" style="display: none ;width: 100%">
-          </div>
+          <!-- Timer  -->
+          <div
+            id="stopwatch"
+            class="container d-flex justify-content-center"
+            style="display: none; width: 100%"
+          ></div>
 
+          <!-- Collect data of another patient  -->
           <div
             class="container d-flex justify-content-center"
             style="width: 100%"
@@ -46,10 +68,11 @@
               href="../index.html"
               class="btn btn-light mt-3 px-4 border border-primary py-3 w-500"
             >
-              collect data for another patient
+              Collect data for another patient
             </a>
           </div>
 
+          <!-- Stop taking data   -->
           <div
             class="container d-flex justify-content-center"
             style="width: 100%"
@@ -62,15 +85,20 @@
               Stop taking data
             </a>
           </div>
-      
+
         </div>
+
+        <!-- Widgets on right side  -->
         <div class="col-md-8">
+
+          <!-- Camera List   -->
           <div
             id="camera-list"
             class="d-flex justify-content-center mb-4 ms-5"
             style="width: 100%"
           ></div>
-          
+
+          <!-- Camera Preview   -->
           <video
             id="webcam"
             autoplay
@@ -81,21 +109,27 @@
             class="webcam-video"
           ></video>
           <canvas id="canvas" class="d-none"></canvas>
+
+          <!-- Snapsound on image save  -->
           <audio
             id="snapSound"
             src="../assets/audio/snap.mp3"
             preload="auto"
+
           ></audio>
         </div>
       </div>
-    </section>
-    <a id="id-1"></a>
-    <section class="container">
 
+    </section>
+
+    <a id="id-1"></a>
+
+    <!-- Image and Video list item -->
+    <section class="container">
       <div id="myImageList"></div>
     </section>
+
     <script src="../js/webCam.js"></script>
     <script src="../js/index.js"></script>
-
   </body>
 </html>
