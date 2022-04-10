@@ -110,9 +110,26 @@ function takePicture() {
   let div_text_input = document.createElement("div");
   div_text_input.classList.add("d-flex");
   div_text_input.classList.add("justify-content-center");
+  // div_text_input.classList.add("form-control");
+  div_text_input.style.minheight = "100%";
+
+  
+
+  // <div class="container d-flex justify-content-center" style="width: 100%">
+  //   <button
+  //     class="btn btn-green mt-3 px-4 border border-primary py-3 w-500"
+  //     onclick="takePicture()"
+  //   >
+  //     Click here or on image to take photos
+  //   </button>
+  // </div>;
+
   let text_input = document.createElement("textarea");
   text_input.classList.add("mt-1")
-  text_input.placeholder = "note for image"
+  text_input.placeholder = "Note Here"
+
+  let save_note_btn = document.createElement("button")
+
   div_text_input.appendChild(text_input)
 
   div1.appendChild(h4);
@@ -242,9 +259,35 @@ function playVideo() {
   div.appendChild(video);
   let p = document.createElement("p");
   p.innerText = `Time : ${today.toLocaleTimeString()}`;
+
+  let div_text_input = document.createElement("div");
+  div_text_input.classList.add("d-flex");
+  div_text_input.classList.add("justify-content-center");
+  // div_text_input.classList.add("form-control");
+  div_text_input.style.minheight = "100%";
+
+  // <div class="container d-flex justify-content-center" style="width: 100%">
+  //   <button
+  //     class="btn btn-green mt-3 px-4 border border-primary py-3 w-500"
+  //     onclick="takePicture()"
+  //   >
+  //     Click here or on image to take photos
+  //   </button>
+  // </div>;
+
+  let text_input = document.createElement("textarea");
+  text_input.classList.add("mt-1");
+  text_input.placeholder = "Note Here";
+
+  let save_note_btn = document.createElement("button");
+
+  div_text_input.appendChild(text_input);
+
   div1.appendChild(h4);
   div1.appendChild(p);
   div1.appendChild(div);
+  div1.appendChild(div_text_input);
+
   imageList.appendChild(div1);
 }
 
