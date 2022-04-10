@@ -6,26 +6,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="../css/bootstrapcss.css" />
     <link rel="stylesheet" href="../css/index.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
   </head>
   <body>
-
     <!-- Title Buttons and webcam preview -->
     <section class="container my-5 py-3">
-
       <div
         class="d-flex justify-content-center"
         style="width: 100%; margin: 0 auto"
       >
-
         <!-- Patient name and procedure -->
         <h1 id="heading-data"></h1>
       </div>
 
       <div class="row mt-5">
-
         <!-- Button on left side  -->
         <div class="col-md-4 my-auto">
-
           <!-- Photo Button    -->
           <div
             class="container d-flex justify-content-center"
@@ -54,10 +56,29 @@
 
           <!-- Timer  -->
           <div
-            id="stopwatch"
             class="container d-flex justify-content-center"
-            style="display: none; width: 100%"
-          ></div>
+            style="width: 100%"
+          >
+            <div
+              id="stopwatch"
+              class="container d-flex justify-content-center"
+              style="display: none;width: 100%; font-size: 200%"
+            ></div>
+
+            <div
+              id = "pauseOption"
+              style="display: none; width: 100%; font-size: 200%"
+            >
+              <button onClick="pauseRecording()"><i class="fa-solid fa-circle-pause"></i></button>
+            </div>
+
+            <div
+              id = "resumeOption"
+              style="display: none; width: 100%; font-size: 200%"
+            >
+              <button onClick="resumeRecording()"><i class="fa-solid fa-play"></i></button>
+            </div>
+          </div>
 
           <!-- Collect data of another patient  -->
           <div
@@ -85,12 +106,10 @@
               Stop taking data
             </a>
           </div>
-
         </div>
 
         <!-- Widgets on right side  -->
         <div class="col-md-8">
-
           <!-- Camera List   -->
           <div
             id="camera-list"
@@ -115,11 +134,9 @@
             id="snapSound"
             src="../assets/audio/snap.mp3"
             preload="auto"
-
           ></audio>
         </div>
       </div>
-
     </section>
 
     <a id="id-1"></a>

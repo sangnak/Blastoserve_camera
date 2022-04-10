@@ -83,60 +83,87 @@ function gotDevices(devices) {
 
 const label = document.createElement("label");
 
+// Previous image with textarea
 //take picture function
-function takePicture() {
+// function takePicture() {
 
-  // Save Image
-  var picture = webcam.snap();
-  let dir = localStorage.getItem("dir");
-  saveImage(picture, dir);
+//   // Save Image
+//   var picture = webcam.snap();
+//   let dir = localStorage.getItem("dir");
+//   saveImage(picture, dir);
 
-  // Add Card in Image/Video List Area
-  let h4 = document.createElement("h4");
-  h4.innerText = `patient name : ${fname}`;
+//   // Add Card in Image/Video List Area
+//   let h4 = document.createElement("h4");
+//   h4.innerText = `patient name : ${fname}`;
 
-  let img = document.createElement("img");
-  let div = document.createElement("div");
-  let div1 = document.createElement("div");
+//   let img = document.createElement("img");
+//   let div = document.createElement("div");
+//   let div1 = document.createElement("div");
 
-  img.src = picture;
-  img.alt = "image/png";
-  div1.classList.add("img-container");
-  div.appendChild(img);
+//   img.src = picture;
+//   img.alt = "image/png";
+//   div1.classList.add("img-container");
+//   div.appendChild(img);
 
-  let p = document.createElement("p");
-  p.innerText = `Time : ${today.toLocaleTimeString()}`;
+//   let p = document.createElement("p");
+//   p.innerText = `Time : ${today.toLocaleTimeString()}`;
 
-  let div_text_input = document.createElement("div");
-  div_text_input.classList.add("d-flex");
-  div_text_input.classList.add("justify-content-center");
-  // div_text_input.classList.add("form-control");
-  div_text_input.style.minheight = "100%";
+//   let div_text_input = document.createElement("div");
+//   div_text_input.classList.add("d-flex");
+//   div_text_input.classList.add("justify-content-center");
+//   // div_text_input.classList.add("form-control");
+//   div_text_input.style.minheight = "100%";
 
   
 
-  // <div class="container d-flex justify-content-center" style="width: 100%">
-  //   <button
-  //     class="btn btn-green mt-3 px-4 border border-primary py-3 w-500"
-  //     onclick="takePicture()"
-  //   >
-  //     Click here or on image to take photos
-  //   </button>
-  // </div>;
+//   // <div class="container d-flex justify-content-center" style="width: 100%">
+//   //   <button
+//   //     class="btn btn-green mt-3 px-4 border border-primary py-3 w-500"
+//   //     onclick="takePicture()"
+//   //   >
+//   //     Click here or on image to take photos
+//   //   </button>
+//   // </div>;
 
-  let text_input = document.createElement("textarea");
-  text_input.classList.add("mt-1")
-  text_input.placeholder = "Note Here"
+//   let text_input = document.createElement("textarea");
+//   text_input.classList.add("mt-1")
+//   text_input.placeholder = "Note Here"
 
-  let save_note_btn = document.createElement("button")
+//   let save_note_btn = document.createElement("button")
 
-  div_text_input.appendChild(text_input)
+//   div_text_input.appendChild(text_input)
 
+//   div1.appendChild(h4);
+//   div1.appendChild(p);
+//   div1.appendChild(div);
+//   div1.appendChild(div_text_input);
+
+//   imageList.appendChild(div1);
+// }
+
+function takePicture() {
+  var picture = webcam.snap();
+
+  let dir = localStorage.getItem("dir");
+
+  let h4 = document.createElement("h4");
+  // fname = fname.value;
+  h4.innerText = `patient name : ${fname}`;
+  let img = document.createElement("img");
+  let div = document.createElement("div");
+  let div1 = document.createElement("div");
+  img.src = picture;
+
+  saveImage(picture, dir);
+
+  img.alt = "image/png";
+  div1.classList.add("img-container");
+  div.appendChild(img);
+  let p = document.createElement("p");
+  p.innerText = `Time : ${today.toLocaleTimeString()}`;
   div1.appendChild(h4);
   div1.appendChild(p);
   div1.appendChild(div);
-  div1.appendChild(div_text_input);
-
   imageList.appendChild(div1);
 }
 
@@ -165,6 +192,8 @@ function saveImage(picture, dir) {
 
 const recordButton = document.querySelector("#record");
 const timer = document.querySelector("#stopwatch");
+const pause = document.querySelector("#pauseOption");
+const resume = document.querySelector("#resumeOption");
 
 let mediaRecorder;
 let recordedBlobs;
@@ -192,6 +221,7 @@ recordButton.addEventListener("click", () => {
 function startRecording() {
   alert("recording started");
   timer.style.display = "block";
+  pause.style.display = "block";
   startTimer();
   
 
@@ -232,9 +262,81 @@ function stopRecording() {
   stopTimer();
   resetTimer();
   timer.style.display = "none";
+  pause.style.display = "none"
+  resume.style.display = "none"
   timer.innerText = "";
   mediaRecorder.stop();
 }
+
+function pauseRecording() {
+  mediaRecorder.pause();
+  stopTimer();
+  pause.style.display = "none";
+  resume.style.display = "block";
+}
+
+function resumeRecording() {
+  mediaRecorder.resume();
+  startTimer();
+  pause.style.display = "block";
+  resume.style.display = "none";
+}
+
+// Previous playvideo with textarea 
+// function playVideo() {
+//   const superBuffer = new Blob(recordedBlobs, { type: "video/webm" });
+
+//   let h4 = document.createElement("h4");
+
+//   h4.innerText = `patient name : ${fname}`;
+//   let video = document.createElement("video");
+//   let div = document.createElement("div");
+//   let div1 = document.createElement("div");
+//   video.src = null;
+//   video.srcObject = null;
+//   video.src = window.URL.createObjectURL(superBuffer);
+//   let dir = localStorage.getItem("dir");
+//   saveVideo(dir);
+//   video.controls = true;
+//   video.autoplay = true;
+//   video.muted = true;
+//   video.loop = true;
+//   video.play();
+//   div1.classList.add("video-container");
+//   div.appendChild(video);
+//   let p = document.createElement("p");
+//   p.innerText = `Time : ${today.toLocaleTimeString()}`;
+
+//   let div_text_input = document.createElement("div");
+//   div_text_input.classList.add("d-flex");
+//   div_text_input.classList.add("justify-content-center");
+//   // div_text_input.classList.add("form-control");
+//   div_text_input.style.minheight = "100%";
+
+//   // <div class="container d-flex justify-content-center" style="width: 100%">
+//   //   <button
+//   //     class="btn btn-green mt-3 px-4 border border-primary py-3 w-500"
+//   //     onclick="takePicture()"
+//   //   >
+//   //     Click here or on image to take photos
+//   //   </button>
+//   // </div>;
+
+//   let text_input = document.createElement("textarea");
+//   text_input.classList.add("mt-1");
+//   text_input.placeholder = "Note Here";
+
+//   let save_note_btn = document.createElement("button");
+
+//   div_text_input.appendChild(text_input);
+
+//   div1.appendChild(h4);
+//   div1.appendChild(p);
+//   div1.appendChild(div);
+//   div1.appendChild(div_text_input);
+
+//   imageList.appendChild(div1);
+// }
 
 function playVideo() {
   const superBuffer = new Blob(recordedBlobs, { type: "video/webm" });
@@ -259,35 +361,9 @@ function playVideo() {
   div.appendChild(video);
   let p = document.createElement("p");
   p.innerText = `Time : ${today.toLocaleTimeString()}`;
-
-  let div_text_input = document.createElement("div");
-  div_text_input.classList.add("d-flex");
-  div_text_input.classList.add("justify-content-center");
-  // div_text_input.classList.add("form-control");
-  div_text_input.style.minheight = "100%";
-
-  // <div class="container d-flex justify-content-center" style="width: 100%">
-  //   <button
-  //     class="btn btn-green mt-3 px-4 border border-primary py-3 w-500"
-  //     onclick="takePicture()"
-  //   >
-  //     Click here or on image to take photos
-  //   </button>
-  // </div>;
-
-  let text_input = document.createElement("textarea");
-  text_input.classList.add("mt-1");
-  text_input.placeholder = "Note Here";
-
-  let save_note_btn = document.createElement("button");
-
-  div_text_input.appendChild(text_input);
-
   div1.appendChild(h4);
   div1.appendChild(p);
   div1.appendChild(div);
-  div1.appendChild(div_text_input);
-
   imageList.appendChild(div1);
 }
 
