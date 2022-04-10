@@ -21,7 +21,7 @@ const createWindow = () => {
   });
   mainWindow.setMenuBarVisibility(false);
   // and load the index.html of the app.
-  mainWindow.loadFile("./src/index.html");
+  mainWindow.loadFile("./src/pages/blastoserve_ad.html");
 
   // Open the DevTools.
 
