@@ -43,6 +43,7 @@ src/js/js
 src/sample.js
 patient-details
 src/js/slider.js
+src/css/style.css
 # TypeScript v1 declaration files
 typings/
 
