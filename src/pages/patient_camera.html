@@ -4,15 +4,11 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="../css/bootstrapcss.css" />/
+
+    <link rel="stylesheet" href="../css/bootstrapcss.css" />
+
     <link rel="stylesheet" href="../css/index.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
-      integrity="sha512-KfkfwYDsLkIlwQp6LFnl8zNdLGxu9YAA1QvwINks4PhcElQSvqcyVLLD9aMhXd13uQjoXtEKNosOWaZqXgel0g=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
+    <script src="../js/fontawesome.js"></script>
   </head>
   <body>
     <!-- Title Buttons and webcam preview -->
@@ -29,6 +25,7 @@
         <!-- Button on left side  -->
         <div class="col-md-4 my-auto">
           <!-- Photo Button    -->
+
           <div
             class="container d-flex justify-content-center"
             style="width: 100%"
@@ -42,6 +39,7 @@
           </div>
 
           <!-- Video Button   -->
+
           <div
             class="container d-flex justify-content-center"
             style="width: 100%"
@@ -55,6 +53,7 @@
           </div>
 
           <!-- Timer  -->
+
           <div
             class="container d-flex justify-content-center"
             style="width: 100%"
@@ -62,25 +61,30 @@
             <div
               id="stopwatch"
               class="container d-flex justify-content-center"
-              style="display: none;width: 100%; font-size: 200%"
+              style="display: none; width: 100%; font-size: 200%"
             ></div>
 
             <div
-              id = "pauseOption"
+              id="pauseOption"
               style="display: none; width: 100%; font-size: 200%"
             >
-              <button onClick="pauseRecording()"><i class="fa-solid fa-circle-pause"></i></button>
+              <button onClick="pauseRecording()">
+                <i class="fa-solid fa-circle-pause"></i>
+              </button>
             </div>
 
             <div
-              id = "resumeOption"
+              id="resumeOption"
               style="display: none; width: 100%; font-size: 200%"
             >
-              <button onClick="resumeRecording()"><i class="fa-solid fa-play"></i></button>
+              <button onClick="resumeRecording()">
+                <i class="fa-solid fa-play"></i>
+              </button>
             </div>
           </div>
 
           <!-- Collect data of another patient  -->
+
           <div
             class="container d-flex justify-content-center"
             style="width: 100%"
@@ -89,11 +93,12 @@
               href="../index.html"
               class="btn btn-light mt-3 px-4 border border-primary py-3 w-500"
             >
-              Collect data for another patient
+              collect data for another patient
             </a>
           </div>
 
           <!-- Stop taking data   -->
+
           <div
             class="container d-flex justify-content-center"
             style="width: 100%"
@@ -111,13 +116,18 @@
         <!-- Widgets on right side  -->
         <div class="col-md-8">
           <!-- Camera List   -->
+
           <div
             id="camera-list"
             class="d-flex justify-content-center mb-4 ms-5"
             style="width: 100%"
-          ></div>
+          >
+            <label for="select">Choose Camera :</label>
+            <select id="select"></select>
+          </div>
 
           <!-- Camera Preview   -->
+
           <video
             id="webcam"
             autoplay
@@ -127,9 +137,18 @@
             height="auto"
             class="webcam-video"
           ></video>
+
+          <div class="icons">
+            <i
+              class="fa-solid fa-expand"
+              style="z-index: 100; color: red"
+              id="id-fullscreen"
+            ></i>
+          </div>
           <canvas id="canvas" class="d-none"></canvas>
 
           <!-- Snapsound on image save  -->
+
           <audio
             id="snapSound"
             src="../assets/audio/snap.mp3"
@@ -142,10 +161,12 @@
     <a id="id-1"></a>
 
     <!-- Image and Video list item -->
+
     <section class="container">
       <div id="myImageList"></div>
     </section>
 
+    <script src="../js/fullsreen.js"></script>
     <script src="../js/webCam.js"></script>
     <script src="../js/index.js"></script>
   </body>

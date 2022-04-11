@@ -7,6 +7,9 @@ body {
   padding: 0;
   box-sizing: border-box;
   background-color: rgba(0, 0, 0, 0.089);
+
+  transition: 0.4s ease-in-out linear;
+
 }
 .btn-green {
   background-color: #269326;
@@ -21,14 +24,6 @@ body {
 }
 
 #webcam {
-  /* 
-    width: 800px;
-    height: 500px;
-    transform: scale(-1, 1);
-    margin: 0;
-    padding: 0;
-    margin-left: 22%; 
-  */
 
   margin-left: auto;
   margin-right: auto;
@@ -43,7 +38,9 @@ body {
 
   flex-direction: row;
 }
+
 .img-container ,.video-container {
+
   margin: 10px 20px;
   padding: 8px 15px;
   border: rgba(0, 0, 0, 0.089) solid 2px;
@@ -123,3 +120,15 @@ body {
     width: 100% !important;
   }
 } */
+
+/* blastoserve_add.html css */
+.heading-blasto::after {
+  content: "";
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 3px;
+  display: grid;
+  width: 200px;
+  justify-content: center;
+  margin: 8px auto;
+}
+

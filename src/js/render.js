@@ -17,8 +17,12 @@ function handleChange() {
   submitButton.innerText = `${fname}`;
 }
 function saveData() {
-
-  if(fname.value != "" && lname.value != "" && pnumber.value != "" && TOP.value != "") {
+  if (
+    fname.value != "" &&
+    lname.value != "" &&
+    pnumber.value != "" &&
+    TOP.value != ""
+  ) {
     localStorage.setItem("fname", submitButton.innerText);
     const dir = `./patient-details/${submitButton.innerText}_${todaysDate}_${time}`;
     if (!fs.existsSync(dir)) {

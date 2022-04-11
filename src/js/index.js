@@ -1,3 +1,4 @@
+const { time } = require("console");
 const fs = require("fs");
 const webcamElement = document.getElementById("webcam");
 const canvasElement = document.getElementById("canvas");
@@ -6,7 +7,8 @@ let imageList = document.getElementById("myImageList");
 let cameraList = document.getElementById("camera-list");
 let headingData = document.getElementById("heading-data");
 
-let select = document.querySelector(".select-list");
+let select = document.querySelector("#select");
+
 headingData.innerText = `${localStorage.getItem(
   "fname"
 )}(${localStorage.getItem("TOP")})`;
@@ -21,30 +23,22 @@ const webcam = new Webcam(
 let fname = localStorage.getItem("fname");
 
 // startCamera();
-const videoConstraits = true;
 
-const constraints = {
-  audio: false,
-  video: videoConstraits,
-};
+try {
+  webcam.start();
+  navigator.mediaDevices.enumerateDevices().then(gotDevices);
+} catch (error) {
+  alert("webcam is not connected ");
+  console.log(error);
+}
+//to genarate the list of attached camera start
 
-//to genarate the list of attached camera
-navigator.mediaDevices
-  .getUserMedia(constraints)
-  .then((stream) => {
-    window.stream = stream;
-    webcamElement.srcObject = stream;
-    return navigator.mediaDevices.enumerateDevices();
-  })
-  .then(gotDevices)
-  .catch((error) => {
-    console.error(error);
-  });
 let getImage = document.getElementById("get-image");
-let labels = [];
 let count = 0;
 function gotDevices(devices) {
-  devices.forEach((device, index) => {
+  select.innerHTML = "";
+  select.appendChild(document.createElement("option"));
+  devices.forEach((device) => {
     if (device.kind == "videoinput") {
       console.log(
         device.kind +
@@ -55,118 +49,100 @@ function gotDevices(devices) {
           " group id = " +
           device.groupId
       );
-      // webcam.webcamList.push(device.deviceId);
-      labels.push(device.deviceId);
-      console.log(labels);
-      var select = document.createElement("select");
-      select.classList.add("select-list");
-      select.name = "camera lists";
-      select.id = "camera";
-      labels.forEach((val) => {
-        console.log(webcam.selectCamera);
+      const option = document.createElement("option");
+      option.value = device.deviceId;
+      const label = device.label || `Camera ${count++}`;
+      const textNode = document.createTextNode(label);
 
-        const option = document.createElement("option");
-        option.value = val != "" ? val : "camera " + count;
-        option.text = val != "" ? val : "camera " + count;
-        count += 1;
-        option.key = index;
-        select.appendChild(option);
-      });
-      labels.push(device.deviceId);
-      label.innerHTML = "Choose your camera: ";
-      label.htmlFor = "camera";
-
-      cameraList.appendChild(label).appendChild(select);
+      option.appendChild(textNode);
+      select.appendChild(option);
     }
   });
 }
+let currentStream;
 
-const label = document.createElement("label");
+function stopMediaTracks(stream) {
+  stream.getTracks().forEach((track) => {
+    track.stop();
+  });
+}
+select.addEventListener("change", (event) => {
+  if (typeof currentStream !== "undefined") {
+    stopMediaTracks(currentStream);
+  }
+  const videoConstraints = {};
+  if (select.value == "") {
+    videoConstraints.facingMode = "environment";
+  } else {
+    videoConstraints.deviceId = { exact: select.value };
+  }
+  const constraints = {
+    video: videoConstraints,
+    audio: false,
+  };
 
-// Previous image with textarea
-//take picture function
+  navigator.mediaDevices
+    .getUserMedia(constraints)
+    .then((stream) => {
+      window.stream = stream;
+      webcamElement.srcObject = stream;
+      return navigator.mediaDevices.enumerateDevices();
+    })
+    .then(gotDevices)
+    .catch((error) => {
+      console.error(error);
+    });
+});
+// generated camera list end
+
+//Open up a modal for the button
+
+
+//take picture function start
+
 function takePicture() {
-
-  // Save Image
   var picture = webcam.snap();
+
   let dir = localStorage.getItem("dir");
-  saveImage(picture, dir);
 
-  // Add Card in Image/Video List Area
   let h4 = document.createElement("h4");
+  // fname = fname.value;
   h4.innerText = `patient name : ${fname}`;
-
   let img = document.createElement("img");
   let div = document.createElement("div");
   let div1 = document.createElement("div");
-
   img.src = picture;
+  saveImage(picture, dir);
   img.alt = "image/png";
   div1.classList.add("img-container");
   div.appendChild(img);
-
   let p = document.createElement("p");
   var today = new Date();
   p.innerText = `Time : ${today.toLocaleTimeString()}`;
 
-  let div_text_input = document.createElement("div");
-  div_text_input.classList.add("d-flex");
-  div_text_input.classList.add("justify-content-center");
-  // div_text_input.classList.add("form-control");
-  div_text_input.style.minheight = "100%";
+  let div_addnote_btn = document.createElement("div");
+  div_addnote_btn.classList.add("container")
+  div_addnote_btn.classList.add("d-flex");
+  div_addnote_btn.classList.add("justify-content-center");
+  div_addnote_btn.style.width = "100%"
 
-  
-
-  // <div class="container d-flex justify-content-center" style="width: 100%">
-  //   <button
-  //     class="btn btn-green mt-3 px-4 border border-primary py-3 w-500"
-  //     onclick="takePicture()"
-  //   >
-  //     Click here or on image to take photos
-  //   </button>
-  // </div>;
-
-  let text_input = document.createElement("textarea");
-  text_input.classList.add("mt-1")
-  text_input.placeholder = "Note Here"
-
-  let save_note_btn = document.createElement("button")
-
-  div_text_input.appendChild(text_input)
+  let button_of_div = document.createElement("button")
+  button_of_div.classList.add("btn")
+  button_of_div.classList.add("btn-green");
+  button_of_div.classList.add("mt-2");
+  button_of_div.classList.add("border-primary");
+  button_of_div.classList.add("py-3");
+  button_of_div.classList.add("px-5");
+  button_of_div.innerText = "Add Notes"
+  div_addnote_btn.append(button_of_div);
 
   div1.appendChild(h4);
   div1.appendChild(p);
   div1.appendChild(div);
-  div1.appendChild(div_text_input);
-
+  div1.appendChild(div_addnote_btn);
   imageList.appendChild(div1);
+
 }
-
-// function takePicture() {
-//   var picture = webcam.snap();
-
-//   let dir = localStorage.getItem("dir");
-
-//   let h4 = document.createElement("h4");
-//   // fname = fname.value;
-//   h4.innerText = `patient name : ${fname}`;
-//   let img = document.createElement("img");
-//   let div = document.createElement("div");
-//   let div1 = document.createElement("div");
-//   img.src = picture;
-
-//   saveImage(picture, dir);
-
-//   img.alt = "image/png";
-//   div1.classList.add("img-container");
-//   div.appendChild(img);
-//   let p = document.createElement("p");
-//   p.innerText = `Time : ${today.toLocaleTimeString()}`;
-//   div1.appendChild(h4);
-//   div1.appendChild(p);
-//   div1.appendChild(div);
-//   imageList.appendChild(div1);
-// }
 
 function saveImage(picture, dir) {
   var matches = picture.match(/^data:([A-Za-z-+/]+);base64,(.+)$/),
@@ -199,14 +175,8 @@ const resume = document.querySelector("#resumeOption");
 let mediaRecorder;
 let recordedBlobs;
 recordButton.addEventListener("click", () => {
-  console.log(recordButton.textContent);
   if (recordButton.innerText == "Start Recording") {
-    
     startRecording();
-
-    recordButton.textContent = "Stop Recording";
-
-    console.log(recordButton);
 
     recordButton.className =
       "btn btn-light mt-3 px-4 border border-primary py-3 w-500 text-danger";
@@ -220,16 +190,22 @@ recordButton.addEventListener("click", () => {
 
 //function start recording
 function startRecording() {
-  alert("recording started");
-  timer.style.display = "block";
-  pause.style.display = "block";
-  startTimer();
-  
-
   recordedBlobs = [];
   let options = { mimeType: "video/webm;codecs=vp9,opus" };
   try {
-    mediaRecorder = new MediaRecorder(window.stream, options);
+    if (window.stream == null) {
+      alert("please select camera");
+      recordButton.textContent = "Start Recording";
+      return;
+    } else {
+      alert("recording started");
+      mediaRecorder = new MediaRecorder(window.stream, options);
+
+      recordButton.textContent = "Stop Recording";
+      timer.style.display = "block";
+      pause.style.display = "block";
+      startTimer();
+    }
   } catch (e) {
     console.error("Exception while creating MediaRecorder:", e);
     errorMsgElement.innerHTML = `Exception while creating MediaRecorder: ${JSON.stringify(
@@ -239,7 +215,6 @@ function startRecording() {
   }
 
   console.log("Created MediaRecorder", mediaRecorder, "with options", options);
-  recordButton.textContent = "Stop Recording";
 
   mediaRecorder.onstop = (event) => {
     console.log("Recorder stopped: ", event);
@@ -263,15 +238,15 @@ function stopRecording() {
   stopTimer();
   resetTimer();
   timer.style.display = "none";
-  pause.style.display = "none"
-  resume.style.display = "none"
+  pause.style.display = "none";
+  resume.style.display = "none";
   timer.innerText = "";
   mediaRecorder.stop();
 }
 
 function pauseRecording() {
-  mediaRecorder.pause();
   stopTimer();
+  mediaRecorder.pause();
   pause.style.display = "none";
   resume.style.display = "block";
 }
@@ -279,11 +254,14 @@ function pauseRecording() {
 function resumeRecording() {
   mediaRecorder.resume();
   startTimer();
+  // setTimeout(function () {
+  //   startTimer();
+  // }, 1000);
   pause.style.display = "block";
   resume.style.display = "none";
 }
 
-// Previous playvideo with textarea 
+// Previous playvideo with textarea
 function playVideo() {
   const superBuffer = new Blob(recordedBlobs, { type: "video/webm" });
 
@@ -306,22 +284,13 @@ function playVideo() {
   div1.classList.add("video-container");
   div.appendChild(video);
   let p = document.createElement("p");
+  let today = new Date();
   p.innerText = `Time : ${today.toLocaleTimeString()}`;
 
   let div_text_input = document.createElement("div");
   div_text_input.classList.add("d-flex");
   div_text_input.classList.add("justify-content-center");
-  // div_text_input.classList.add("form-control");
   div_text_input.style.minheight = "100%";
-
-  // <div class="container d-flex justify-content-center" style="width: 100%">
-  //   <button
-  //     class="btn btn-green mt-3 px-4 border border-primary py-3 w-500"
-  //     onclick="takePicture()"
-  //   >
-  //     Click here or on image to take photos
-  //   </button>
-  // </div>;
 
   let text_input = document.createElement("textarea");
   text_input.classList.add("mt-1");
@@ -384,7 +353,6 @@ async function saveVideo(dir) {
 function startNewData() {
   localStorage.clear();
 }
-
 var hr = 0;
 var min = 0;
 var sec = 0;
