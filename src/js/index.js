@@ -96,6 +96,32 @@ select.addEventListener("change", (event) => {
 // generated camera list end
 
 //Open up a modal for the button
+// Get the modal
+var modal = document.getElementById("myModal");
+
+// Get the button that opens the modal
+var btn = document.getElementById("myBtn");
+
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+
+// When the user clicks on the button, open the modal
+function openModal() {
+    modal.style.display = "block";
+};
+
+// When the user clicks on <span> (x), close the modal
+function closeModal() {
+    modal.style.display = "none";
+};
+span.addEventListener("click", closeModal);
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+};
 
 
 //take picture function start
@@ -127,6 +153,8 @@ function takePicture() {
   div_addnote_btn.style.width = "100%"
 
   let button_of_div = document.createElement("button")
+  button_of_div.id = "myBtn"
+  button_of_div.addEventListener("click", openModal)
   button_of_div.classList.add("btn")
   button_of_div.classList.add("btn-green");
   button_of_div.classList.add("mt-2");
@@ -276,36 +304,41 @@ function playVideo() {
   video.src = window.URL.createObjectURL(superBuffer);
   let dir = localStorage.getItem("dir");
   saveVideo(dir);
-  video.controls = true;
-  video.autoplay = true;
-  video.muted = true;
-  video.loop = true;
-  video.play();
   div1.classList.add("video-container");
   div.appendChild(video);
   let p = document.createElement("p");
   let today = new Date();
   p.innerText = `Time : ${today.toLocaleTimeString()}`;
 
-  let div_text_input = document.createElement("div");
-  div_text_input.classList.add("d-flex");
-  div_text_input.classList.add("justify-content-center");
-  div_text_input.style.minheight = "100%";
+  let div_addnote_btn = document.createElement("div");
+  div_addnote_btn.classList.add("container");
+  div_addnote_btn.classList.add("d-flex");
+  div_addnote_btn.classList.add("justify-content-center");
+  div_addnote_btn.style.width = "100%";
 
-  let text_input = document.createElement("textarea");
-  text_input.classList.add("mt-1");
-  text_input.placeholder = "Note Here";
-
-  let save_note_btn = document.createElement("button");
-
-  div_text_input.appendChild(text_input);
+  let button_of_div = document.createElement("button");
+  button_of_div.id = "myBtn";
+  button_of_div.addEventListener("click", openModal);
+  button_of_div.classList.add("btn");
+  button_of_div.classList.add("btn-green");
+  button_of_div.classList.add("mt-2");
+  button_of_div.classList.add("border-primary");
+  button_of_div.classList.add("py-3");
+  button_of_div.classList.add("px-5");
+  button_of_div.innerText = "Add Notes";
+  div_addnote_btn.append(button_of_div);
 
   div1.appendChild(h4);
   div1.appendChild(p);
   div1.appendChild(div);
-  div1.appendChild(div_text_input);
-
+  div1.appendChild(div_addnote_btn);
   imageList.appendChild(div1);
+
+  video.controls = true;
+  video.autoplay = true;
+  video.muted = true;
+  video.loop = true;
+  video.play();
 }
 
 // function playVideo() {
