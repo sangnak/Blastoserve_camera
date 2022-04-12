@@ -36,7 +36,7 @@ function saveData() {
       let data = `
       'First Name' : ${fname},
       'Last Name' : ${lname.value},
-      'Contact Number' : ${parseInt(pnumber.value)},
+      'Date' : ${pnumber.value},
       'Type Of Procedure' : ${TOP.value}
       
       
