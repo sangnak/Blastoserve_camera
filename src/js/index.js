@@ -95,8 +95,8 @@ select.addEventListener("change", (event) => {
 });
 // generated camera list end
 
-//Open up a modal for the button
-// Get the modal
+// //Open up a modal for the button
+// // Get the modal
 // var modal = document.getElementById("myModal");
 
 // // Get the button that opens the modal
@@ -105,9 +105,13 @@ select.addEventListener("change", (event) => {
 // // Get the <span> element that closes the modal
 // var span = document.getElementsByClassName("close")[0];
 
+// var textAreaModal = document.getElementById("addNotesTextArea");
+
+
 // // When the user clicks on the button, open the modal
 // function openModal() {
 //     modal.style.display = "block";
+//     document.getElementById("addNotesTextArea").disabled = false;
 // };
 
 // // When the user clicks on <span> (x), close the modal
@@ -226,7 +230,7 @@ function startRecording() {
       recordButton.textContent = "Start Recording";
       return;
     } else {
-      alert("recording started");
+      // alert("recording started");
       mediaRecorder = new MediaRecorder(window.stream, options);
 
       recordButton.textContent = "Stop Recording";
@@ -262,7 +266,7 @@ function handleDataAvailable(event) {
 }
 
 function stopRecording() {
-  alert("recording stopped and saved automatically");
+  // alert("recording stopped and saved automatically");
   stopTimer();
   resetTimer();
   timer.style.display = "none";
@@ -339,6 +343,7 @@ function playVideo() {
   // div1.appendChild(div_addnote_btn);
   imageList.appendChild(div1);
 
+  textAreaModal.innerText = "Add here";
   
 }
 
