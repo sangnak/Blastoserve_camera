@@ -127,6 +127,13 @@ select.addEventListener("change", (event) => {
 //     }
 // };
 
+let imageVideoIds = []
+class ImageVideoId {
+  constructor(patientName, imageVideoCaptureTime) {
+    this.patientName = patientName;
+    this.imageVideoCaptureTime = imageVideoCaptureTime;
+  }
+}
 
 //take picture function start
 
@@ -148,7 +155,20 @@ function takePicture() {
   div.appendChild(img);
   let p = document.createElement("p");
   var today = new Date();
+  let time_in_mili = today.toISOString().split(" ");
   p.innerText = `Time : ${today.toLocaleTimeString()}`;
+
+  let div_text_input = document.createElement("div");
+  let text_input = document.createElement("textarea");
+  div_text_input.classList.add("d-flex");
+  div_text_input.classList.add("justify-content-center");
+  div_text_input.style.minheight = "100%";
+
+  text_input.classList.add("mt-1");
+  text_input.placeholder = "Note Here";
+  text_input.cols = 24;
+  text_input.id = today.toISOString().split(" ");
+  div_text_input.appendChild(text_input);
 
   // let div_addnote_btn = document.createElement("div");
   // div_addnote_btn.classList.add("container")
@@ -171,9 +191,56 @@ function takePicture() {
   div1.appendChild(h4);
   div1.appendChild(p);
   div1.appendChild(div);
-  // div1.appendChild(div_addnote_btn);
   imageList.appendChild(div1);
+  div1.appendChild(div_text_input);
 
+  new_img_vid_id = new ImageVideoId(fname, time_in_mili);
+  imageVideoIds.push(new_img_vid_id);
+  console.log(new_img_vid_id.patientName, new_img_vid_id.imageVideoCaptureTime);
+  console.log(time_in_mili);
+
+  let data;
+  let imageId = Math.random().toString(36).substr(2, 11);
+  text_input.oninput = (e) => {
+    text_input.value = e.target.value;
+
+    data = `
+    {
+      "Description":"${text_input.value}",
+      "time":"${time_in_mili}"
+    }`;
+  };
+
+  text_input.onblur = () => {
+    let timeCount = time_in_mili[0].split(":").join("_");
+    let fileName = `${dir}/image_${timeCount}_notes.` + "txt";
+
+    let final = text_input.value.replace(/\s+/g, "");
+    if (final == "") {
+      text_input.value = null;
+
+      if(fs.existsSync(fileName)){
+        fs.unlink(fileName, function (err) {
+          if (err) throw err;
+          // if no error, file has been deleted successfully
+          console.log("File deleted!");
+        });
+      }
+
+    } else {
+      
+      fs.writeFile(fileName, data, (err) => {
+        if (err) return console.error(err);
+        console.log("file saved to ", `${dir}/${fileName}`);
+      });
+      // fs.appendFile(`${dir}/${fname}_Images_comments.txt`, data, function (err) {
+      //   if (err) throw err;
+      //   console.log("Thanks, It's saved to the file!");
+      // });
+
+      // text_input.value = "";
+    }
+  };
 }
 
 function saveImage(picture, dir) {
@@ -317,7 +384,20 @@ function playVideo() {
   div.appendChild(video);
   let p = document.createElement("p");
   let today = new Date();
+  let time_in_mili = today.toISOString().split(" ");
   p.innerText = `Time : ${today.toLocaleTimeString()}`;
+
+  let div_text_input = document.createElement("div");
+  let text_input = document.createElement("textarea");
+  div_text_input.classList.add("d-flex");
+  div_text_input.classList.add("justify-content-center");
+  div_text_input.style.minheight = "100%";
+
+  text_input.classList.add("mt-1");
+  text_input.placeholder = "Note Here";
+  text_input.cols = 24;
+  text_input.id = today.toISOString().split(" ");
+  div_text_input.appendChild(text_input);
 
   // let div_addnote_btn = document.createElement("div");
   // div_addnote_btn.classList.add("container");
@@ -340,10 +420,56 @@ function playVideo() {
   div1.appendChild(h4);
   div1.appendChild(p);
   div1.appendChild(div);
-  // div1.appendChild(div_addnote_btn);
   imageList.appendChild(div1);
+  div1.appendChild(div_text_input);
 
-  textAreaModal.innerText = "Add here";
+  // textAreaModal.innerText = "Add here";
+
+  new_img_vid_id = new ImageVideoId(fname, time_in_mili);
+  imageVideoIds.push(new_img_vid_id);
+  console.log(new_img_vid_id.patientName, new_img_vid_id.imageVideoCaptureTime);
+  console.log(time_in_mili);
+
+  let data;
+  let imageId = Math.random().toString(36).substr(2, 11);
+  text_input.oninput = (e) => {
+    text_input.value = e.target.value;
+
+    data = `
+    {
+      "Description":"${text_input.value}",
+      "time":"${time_in_mili}"
+    }`;
+  };
+
+  text_input.onblur = () => {
+    let timeCount = time_in_mili[0].split(":").join("_");
+    let fileName = `${dir}/image_${timeCount}_notes.` + "txt";
+
+    let final = text_input.value.replace(/\s+/g, "");
+    if (final == "") {
+      text_input.value = null;
+
+      if (fs.existsSync(fileName)) {
+        fs.unlink(fileName, function (err) {
+          if (err) throw err;
+          // if no error, file has been deleted successfully
+          console.log("File deleted!");
+        });
+      }
+    } else {
+      fs.writeFile(fileName, data, (err) => {
+        if (err) return console.error(err);
+        console.log("file saved to ", `${dir}/${fileName}`);
+      });
+      // fs.appendFile(`${dir}/${fname}_Images_comments.txt`, data, function (err) {
+      //   if (err) throw err;
+      //   console.log("Thanks, It's saved to the file!");
+      // });
+
+      // text_input.value = "";
+    }
+  };
   
 }
 
