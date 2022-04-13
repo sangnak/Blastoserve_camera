@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="../css/bootstrapcss.css" />
+    <link rel="stylesheet" href="../css/textaddmodal.css" />
+    <link rel="stylesheet" href="../css/index.css" />
+    <script src="../js/fontawesome.js"></script>
+  </head>
+  <body>
+
+    <!-- Title Buttons and webcam preview -->
+    <section class="container mt-2">
+      <div id="alert-component" role="alert">
+        
+      </div>
+
+
+    <!-- Trigger/Open The Modal -->
+    <!-- <button id="myBtn">Open Modal</button> -->
+
+    <!-- The Modal -->
+    <!-- <div id="myModal" class="modal" style="z-index: 1000 !important;"> -->
+
+      <!-- Modal content -->
+      <!-- <div class="modal-content">
+        <div class="modal-header">
+          <span class="close">&times;</span>
+          <h2>Modal Header</h2>
+        </div>
+        <div class="modal-body d-flex justify-content-center w-100" >
+          <textarea id="addNotesTextArea" placeholder="Description" width="100%" rows="10" cols="200" ></textarea>
+        </div>
+        <div class="modal-footer">
+          <div
+            class="flex justify-content-center"
+          >
+            <button
+              class="btn btn-green mt-3 px-4 border border-primary py-3"
+            >
+              Save
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div> -->
+    <!-- Modal ends here  -->
+
+    <!-- Title Buttons and webcam preview -->
+    <section class="container">
+
+      <div
+        class="d-flex justify-content-center"
+        style="width: 100%; margin: 0 auto"
+      >
+        <!-- Patient name and procedure -->
+        <h1 id="heading-data"></h1>
+      </div>
+
+      <div class="row mt-5">
+        <!-- Button on left side  -->
+        <div class="col-md-4 my-auto">
+          <!-- Photo Button    -->
+
+          <div
+            class="container d-flex justify-content-center"
+            style="width: 100%"
+          >
+            <button
+              class="btn btn-green mt-3 px-4 border border-primary py-3 w-500"
+              onclick="takePicture()"
+            >
+              Click here or on image to take photos
+            </button>
+          </div>
+
+          <!-- Video Button   -->
+
+          <div
+            class="container d-flex justify-content-center"
+            style="width: 100%"
+          >
+            <button
+              id="record"
+              class="btn btn-danger mt-3 px-4 border border-primary py-3 w-500"
+            >
+              Start Recording
+            </button>
+          </div>
+
+          <!-- Timer  -->
+
+          <div
+            class="container d-flex justify-content-center"
+            style="width: 100%"
+          >
+            <div
+              id="stopwatch"
+              class="container d-flex justify-content-center"
+              style="display: none; width: 100%; font-size: 200%"
+            ></div>
+
+            <div
+              id="pauseOption"
+              style="display: none; width: 100%; font-size: 200%"
+            >
+              <button onClick="pauseRecording()">
+                <i class="fa-solid fa-circle-pause"></i>
+              </button>
+            </div>
+
+            <div
+              id="resumeOption"
+              style="display: none; width: 100%; font-size: 200%"
+            >
+              <button onClick="resumeRecording()">
+                <i class="fa-solid fa-play"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Collect data of another patient  -->
+
+          <div
+            class="container d-flex justify-content-center"
+            style="width: 100%"
+          >
+            <a
+              href="../index.html"
+              class="btn btn-light mt-3 px-4 border border-primary py-3 w-500"
+            >
+              collect data for another patient
+            </a>
+          </div>
+
+          <!-- Stop taking data   -->
+
+          <div
+            class="container d-flex justify-content-center"
+            style="width: 100%"
+          >
+            <a
+              href="./blastoserve_ad.html"
+              class="btn btn-light mt-3 px-4 border border-primary py-3 w-500"
+              onclick="startNewData()"
+            >
+              Stop taking data
+            </a>
+          </div>
+        </div>
+
+        <!-- Widgets on right side  -->
+        <div class="col-md-8">
+          <!-- Camera List   -->
+
+          <div
+            id="camera-list"
+            class="d-flex justify-content-center mb-4 ms-5"
+            style="width: 100%"
+          >
+
+            <label for="select" class="mx-2">Choose Camera :</label>
+
+            <select id="select"></select>
+          </div>
+
+          <!-- Camera Preview   -->
+
+          <video
+            id="webcam"
+            autoplay
+            playsinline
+            onclick="takePicture()"
+            width="900"
+            height="auto"
+
+            class="webcam-video shadow rounded"
+
+          ></video>
+
+          <div class="icons">
+            <i
+              class="fa-solid fa-expand"
+              style="z-index: 100; color: red"
+              id="id-fullscreen"
+            ></i>
+          </div>
+          <canvas id="canvas" class="d-none"></canvas>
+
+          <!-- Snapsound on image save  -->
+
+          <audio
+            id="snapSound"
+
+            src="../assets/audio/snap1.mp3"
+
+            preload="auto"
+          ></audio>
+        </div>
+      </div>
+    </section>
+
+    <a id="id-1"></a>
+
+    <!-- Image and Video list item -->
+
+    <section class="container">
+      <div id="myImageList"></div>
+    </section>
+
+    <script src="../js/fullsreen.js"></script>
+    <script src="../js/webCam.js"></script>
+    <script src="../js/index.js"></script>
+  </body>
+</html>

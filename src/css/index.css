@@ -1,0 +1,179 @@
+body {
+  /* font-family: BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial,
+    sans-serif;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+      monospace; */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  margin: 0;
+  text-decoration: none;
+  text-transform: capitalize;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: rgba(0, 0, 0, 0.089);
+
+  transition: 0.4s ease-in-out linear;
+}
+.btn-green {
+  background-color: #269326;
+  padding: 20px 10px;
+  color: rgba(255, 255, 255, 0.9);
+}
+.btn-green:hover {
+  color: rgba(255, 255, 255, 0.9);
+}
+.container1 {
+  max-width: 38rem;
+}
+
+#webcam {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.w-500 {
+  width: 500px;
+}
+#myImageList {
+  display: inline-flex !important;
+  flex-wrap: wrap;
+
+  flex-direction: row;
+}
+
+.img-container,
+.video-container {
+  margin: 10px 20px;
+  padding: 8px 15px;
+  border: rgba(0, 0, 0, 0.089) solid 2px;
+  text-align: center;
+}
+
+#myImageList img {
+  width: 200px;
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  border-radius: 5%;
+}
+
+#myImageList h4 {
+  font-size: large;
+  font-weight: bold;
+}
+#myImageList p {
+  font-size: large;
+}
+#myImageList video {
+  width: 200px;
+  height: auto;
+  border-radius: 2%;
+}
+
+.webcam-video {
+  z-index: -1;
+  object-fit: contain;
+  background: linear-gradient(
+    45deg,
+    rgba(0, 0, 0, 0.6),
+    rgba(0, 0, 0, 0.7),
+    rgba(0, 0, 0, 0.5)
+  );
+  border: #269326 1px solid;
+}
+
+/* video {
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1);
+} */
+
+/* Uncomment this to horizontally flip the camera, though the image saved is as original
+
+/* @media screen and (max-width: 800px) {
+  .webcam-video {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  #myImageList {
+    width: 100% !important;
+    margin: 10px auto;
+  }
+  .img-container {
+    width: 45% !important;
+  }
+*/
+@media screen and (max-width: 1441px) {
+  .webcam-video {
+    width: 100% !important;
+    height: auto !important;
+  }
+  /*
+  .img-container {
+    text-align: center;
+    border-radius: 2%;
+    border: rgba(0, 0, 0, 0.089) solid 2px;
+    width: 30%;
+    display: inline-grid;
+    justify-content: space-between;
+  }
+  .img-container img {
+    width: 100%;
+    margin: 0;
+    padding: 2%;
+
+  } */
+}
+@media screen and (max-width: 760px) {
+  #camera-list {
+    display: flex !important;
+    justify-content: center !important;
+    width: 90% !important;
+    margin-top: 10px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  #camera-list select {
+    width: fit-content;
+    padding: 8px 10px;
+    margin-right: 2%;
+    margin-left: 2%;
+  }
+  #myImageList {
+    justify-content: center !important;
+  }
+  .img-container,
+  .video-container {
+    width: 100% !important;
+  }
+  #myImageList img,
+  #myImageList video {
+    width: 90%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .webcam-video {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .img-container {
+    width: 100% !important;
+  }
+}
+*/ #alert-component {
+  height: 65px;
+}
+
+/* blastoserve_add.html css */
+.heading-blasto::after {
+  content: "";
+  background-color: rgba(0, 0, 0, 0.5);
+  height: 3px;
+  display: grid;
+  width: 200px;
+  justify-content: center;
+  margin: 8px auto;
+}

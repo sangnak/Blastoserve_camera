@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+
+    <title>Blastoserve Camera</title>
+
+    <script defer src="./js/render.js"></script>
+    <link rel="stylesheet" href="./css/bootstrapcss.css" />
+    <link rel="stylesheet" href="./css/index.css" />
+  </head>
+
+  <body class="content">
+    <section
+      class="form mt-auto"
+      style="height: 100%; transform: translateY(20%)"
+    >
+      <div class="container container1">
+        <h2 class="text-center mb-5">fill this patient form</h2>
+
+        <form>
+          <div class="mb-3">
+            <label for="fname" class="form-label mx-lg-3 my-2"
+              >First Name :</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="fname"
+              name="fname"
+              required
+              minlength="3"
+              maxlength="20"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="lname" class="form-label mx-lg-3 my-2"
+              >Last Name :</label
+            >
+            <input type="text" class="form-control" id="lname" name="lname" />
+          </div>
+          <!--
+          <div class="mb-3">
+            <label for="phonenumber" class="form-label mx-lg-3 my-2"
+              >Contact Number :</label
+            >
+            <input
+              type="tel"
+              class="form-control"
+              id="pnumber"
+              name="pnumber"
+              minlength="10"
+              pattern="^\d{3}-\d{3}-\d{4}$"
+              maxlength="12"
+              required
+            />
+          </div>
+        -->
+
+          <div class="mb-3">
+            <label for="phonenumber" class="form-label mx-lg-3 my-2"
+              >Date :</label
+            >
+            <input
+              type="date"
+              class="form-control"
+              id="pnumber"
+              name="pnumber"
+              required
+            />
+          </div>
+
+          <div class="mb-3">
+            <label for="top" class="form-label mx-lg-3 my-2"
+              >Type Of Procedure :</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="TOP"
+              name="TOP"
+              required
+            />
+          </div>
+
+          <div
+            class="container d-flex justify-content-center"
+            style="width: 100%"
+          >
+            <button
+              class="btn btn-green mt-3 px-5"
+              type="submit"
+              onclick="saveData()"
+            >
+              start capturing data <span id="submit_button">patient name</span>
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </body>
+</html>
