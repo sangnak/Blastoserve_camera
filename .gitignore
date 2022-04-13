@@ -87,3 +87,9 @@ typings/
 
 # Electron-Forge
 out/
+
+#some other
+
+patient-details
+src/js/slider.js
+src/css/style.css
