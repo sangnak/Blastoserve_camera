@@ -20,7 +20,7 @@
   "config": {
     "forge": {
       "packagerConfig": {
-        "icon": "src/assets/images/blsdtlogo.png"
+        "icon": "src/assets/images/blsdtlogo-removebg-preview.jpg"
       },
       "makers": [
         {
@@ -39,7 +39,7 @@
           "name": "@electron-forge/maker-deb",
           "config": {
             "options": {
-              "icon": "src/assets/images/blsdtlogo.png"
+              "icon": "src/assets/images/blsdtlogo-removebg-preview.jpg"
             }
           }
         },
