@@ -177,3 +177,43 @@ body {
   justify-content: center;
   margin: 8px auto;
 }
+
+/* Parent Container */
+.content_img {
+  position: relative;
+  width: 200px;
+  height: auto;
+  float: left;
+  margin-right: 10px;
+}
+
+/* Child Text Container */
+.content_img div {
+  position: absolute;
+  bottom: -1.7rem;
+  right: 0;
+  background: black;
+  color: white;
+  margin-bottom: 5px;
+  font-family: sans-serif;
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transition: visibility 0s, opacity 0.5s linear;
+  transition: visibility 0s, opacity 0.5s linear;
+}
+
+/* Hover on Parent Container */
+.content_img:hover {
+  cursor: pointer;
+}
+
+.content_img:hover div {
+  width: auto;
+  background: transparent;
+  color: rgba(0, 0, 0, 1);
+  padding: 8px 15px;
+  visibility: visible;
+  opacity: 1;
+  z-index: 1000;
+  font-size: x-small;
+}
