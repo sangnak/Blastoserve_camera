@@ -277,7 +277,7 @@ function saveImage(picture, dir) {
   fs.writeFile(`${dir}/${fileName}`, imageBuffer, (err) => {
     if (err) return console.error(err);
     console.log("file saved to ", `${dir}/${fileName}`);
-    alertFunc("Image is saved successfully", "success");
+    // alertFunc("Image is saved successfully", "success");
   });
 }
 
@@ -310,7 +310,7 @@ function startRecording() {
   let options = { mimeType: "video/webm;codecs=vp9,opus" };
   try {
     if (window.stream == null) {
-      alertFunc("please select camera", "danger");
+      // alertFunc("please select camera", "danger");
       recordButton.textContent = "Start Recording";
       return;
     } else {
@@ -318,7 +318,7 @@ function startRecording() {
       recordButton.textContent = "Stop Recording";
       timer.style.display = "block";
       pause.style.display = "block";
-      alertFunc("recording started", "primary");
+      // alertFunc("recording started", "primary");
 
       startTimer();
     }
@@ -370,7 +370,7 @@ function alertFunc(msg, type) {
   // // clearTimeout(timeClear);
 }
 function stopRecording() {
-  alertFunc("recording stopped and saved successfully", "success");
+  // alertFunc("recording stopped and saved successfully", "success");
 
   stopTimer();
   resetTimer();
