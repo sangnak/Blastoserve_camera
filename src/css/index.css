@@ -217,3 +217,7 @@ body {
   z-index: 1000;
   font-size: x-small;
 }
+
+::placeholder {
+  text-align: center;
+}
