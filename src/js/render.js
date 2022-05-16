@@ -27,24 +27,24 @@ save__btn.addEventListener("click", (e) => {
   let pnumber = document.getElementById("pnumber");
   let TOP = document.getElementById("TOP");
 
-  if (fname.value == "" || fname.value.length < 3 || fname.value.length > 20) {
+  if (fname.value == "" || fname.value.length < 1 || fname.value.length > 50) {
     alertFunc(
       "danger",
-      "First Name Must be atleast three character and maximum 20 character"
+      "First Name Must be atleast one character and maximum 50 character"
     );
     return false;
   } else if (
     lname.value == "" ||
-    lname.value.length < 3 ||
-    lname.value.length > 20
+    lname.value.length < 1 ||
+    lname.value.length > 50
   ) {
     alertFunc(
       "danger",
-      "Last Name Must be atleast three character and maximum 20 character"
+      "Last Name Must be atleast one character and maximum 50 character"
     );
     return false;
   } else if (pnumber.value == "" || pnumber == null) {
-    alertFunc("danger", "Please fill the date");
+    alertFunc("danger", "Date is required field");
     return false;
   } else if (TOP.value == "" || TOP == null) {
     alertFunc("danger", "Type of procedure is required field");

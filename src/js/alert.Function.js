@@ -5,5 +5,5 @@ function alertFunc(type, msg) {
   alertsOfForm.style.opacity = "1";
   setTimeout(() => {
     alertsOfForm.style.opacity = "0";
-  }, 2000);
+  }, 4000);
 }

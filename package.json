@@ -52,7 +52,8 @@
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0",
-    "mongodb": "^4.5.0"
+    "mongodb": "^4.5.0",
+    "shortid": "^2.2.16"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.63",

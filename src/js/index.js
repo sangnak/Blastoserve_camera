@@ -183,7 +183,8 @@ function takePicture() {
   div_text_input.classList.add("d-flex");
   div_text_input.classList.add("justify-content-center");
   div_text_input.style.minheight = "100%";
-
+  let p_new = document.createElement("p");
+  p_new.innerText = "Category : Image";
   text_input.classList.add("mt-1");
 
   text_input.placeholder = "Enter Note Here";
@@ -192,6 +193,7 @@ function takePicture() {
   div_text_input.appendChild(text_input);
   div1.appendChild(h4);
   div1.appendChild(p);
+  div1.appendChild(p_new);
   div1.appendChild(div);
   imageList.appendChild(div1);
   div1.appendChild(div_text_input);
@@ -278,7 +280,10 @@ function saveImage(picture, dir) {
   fs.writeFile(`${dir}/${fileName}`, imageBuffer, (err) => {
     if (err) return console.error(err);
     console.log("file saved to ", `${dir}/${fileName}`);
-    alertFunc("success", "Image is saved successfully");
+    alertFunc(
+      "success",
+      "Image saved successfully, Scroll down to see Images."
+    );
   });
 }
 
@@ -409,7 +414,8 @@ async function playVideo() {
   let today = new Date();
   let time_in_mili = today.toISOString().split(" ");
   p.innerText = `Time : ${today.toLocaleTimeString()}`;
-
+  let p_new = document.createElement("p");
+  p_new.innerText = "Category : Video";
   let div_text_input = document.createElement("div");
   let text_input = document.createElement("textarea");
   div_text_input.classList.add("d-flex");
@@ -424,6 +430,7 @@ async function playVideo() {
 
   div1.appendChild(h4);
   div1.appendChild(p);
+  div1.appendChild(p_new);
   div1.appendChild(div);
   div1.appendChild(div_text_input);
 
