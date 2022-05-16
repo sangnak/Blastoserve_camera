@@ -13,10 +13,11 @@
   <body>
 
     <!-- Title Buttons and webcam preview -->
-    <section class="container mt-2">
-      <div id="alert-component" role="alert">
+    <div id="alertsOfForm" class="alert text-center my-2" style="height:50px; width: 100%; text-align: center;">
         
-      </div>
+    </div>
+    <section class="container mt-2">
+      
 
 
     <!-- Trigger/Open The Modal -->
@@ -130,6 +131,7 @@
             style="width: 100%"
           >
             <a
+            onclick="startForanotherPatient()"
               href="../index.html"
               class="btn btn-light mt-3 px-4 border border-primary py-3 w-500"
             >
@@ -216,6 +218,7 @@
 
     <script src="../js/fullsreen.js"></script>
     <script src="../js/webCam.js"></script>
+    <script src="../js/alert.Function.js"></script>
     <script src="../js/index.js"></script>
   </body>
 </html>

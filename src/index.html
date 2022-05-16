@@ -5,7 +5,6 @@
 
     <title>Blastoserve Camera</title>
 
-    <script defer src="./js/render.js"></script>
     <link rel="stylesheet" href="./css/bootstrapcss.css" />
     <link rel="stylesheet" href="./css/index.css" />
   </head>
@@ -15,6 +14,9 @@
       class="form mt-auto"
       style="height: 100%; transform: translateY(20%)"
     >
+      <div id="alertsOfForm" class="alert text-center" style="height:50px ">
+        
+      </div>
       <div class="container container1">
         <h2 class="text-center mb-5">fill this patient form</h2>
 
@@ -87,11 +89,7 @@
             class="container d-flex justify-content-center content_img"
             style="width: 100%"
           >
-            <button
-              class="btn btn-green mt-3 px-5"
-              type="submit"
-              onclick="saveData()"
-            >
+            <button class="btn btn-green mt-3 px-5 save__btn" type="submit">
               start capturing data <span id="submit_button">patient name</span>
             </button>
             <div>submit the patient data and save automatically</div>
@@ -99,5 +97,8 @@
         </form>
       </div>
     </section>
+
+    <script src="./js/alert.Function.js"></script>
+    <script src="./js/render.js"></script>
   </body>
 </html>

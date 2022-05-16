@@ -80,7 +80,7 @@ body {
     rgba(0, 0, 0, 0.7),
     rgba(0, 0, 0, 0.5)
   );
-  border: #269326 1px solid;
+  border: var(--bs-green) 1px solid;
 }
 
 /* video {
@@ -178,6 +178,8 @@ body {
   margin: 8px auto;
 }
 
+/* patient_camera.html */
+
 /* Parent Container */
 .content_img {
   position: relative;
@@ -192,8 +194,8 @@ body {
   position: absolute;
   bottom: -1.7rem;
   right: 0;
-  background: black;
-  color: white;
+  background: var(--bs-gradient);
+  color: var(--bs-body-bg);
   margin-bottom: 5px;
   font-family: sans-serif;
   opacity: 0;

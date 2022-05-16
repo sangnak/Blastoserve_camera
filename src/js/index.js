@@ -40,7 +40,7 @@ try {
     })
     .then(gotDevices);
 } catch (error) {
-  alertFunc("Webcam is not connected", "danger");
+  alertFunc("danger", "Webcam is not connected");
 
   console.log(error);
 }
@@ -103,7 +103,7 @@ select.addEventListener("change", (event) => {
     })
     .then(gotDevices)
     .catch((error) => {
-      console.error(error);
+      alertFunc("danger", error);
     });
 });
 // generated camera list end
@@ -246,7 +246,7 @@ function takePicture() {
       if (fs.existsSync(fileName)) {
         fs.unlink(fileName, function (err) {
           if (err) throw err;
-          // if no error, file has been deleted successfully
+          alertFunc("danger", "File deleted!");
           console.log("File deleted!");
         });
       }
@@ -254,6 +254,7 @@ function takePicture() {
       fs.writeFile(fileName, data, (err) => {
         if (err) return console.error(err);
         console.log("file saved to ", `${dir}/${fileName}`);
+        alertFunc("success", "file saved successfully");
       });
     }
   };
@@ -277,7 +278,7 @@ function saveImage(picture, dir) {
   fs.writeFile(`${dir}/${fileName}`, imageBuffer, (err) => {
     if (err) return console.error(err);
     console.log("file saved to ", `${dir}/${fileName}`);
-    // alertFunc("Image is saved successfully", "success");
+    alertFunc("success", "Image is saved successfully");
   });
 }
 
@@ -310,7 +311,7 @@ function startRecording() {
   let options = { mimeType: "video/webm;codecs=vp9,opus" };
   try {
     if (window.stream == null) {
-      // alertFunc("please select camera", "danger");
+      alertFunc("warning", "please select camera");
       recordButton.textContent = "Start Recording";
       return;
     } else {
@@ -318,7 +319,7 @@ function startRecording() {
       recordButton.textContent = "Stop Recording";
       timer.style.display = "block";
       pause.style.display = "block";
-      // alertFunc("recording started", "primary");
+      alertFunc("success", "Recording Started");
 
       startTimer();
     }
@@ -350,27 +351,9 @@ function handleDataAvailable(event) {
 }
 
 //alert func
-function alertFunc(msg, type) {
-  let div = document.createElement("div");
-  div.classList.add("alert");
-  div.classList.add(`alert-${type}`);
-  div.innerText = msg;
-  div.role = "alert";
-  alert.appendChild(div);
-  // alert.classList.remove("opacity-0");
 
-  const timeClear = setTimeout(() => {
-    // alert.classList.add("opacity-0");
-    alert.removeChild(div);
-  }, 2000);
-
-  return () => clearTimeout(timeClear);
-  // alert.innerText = msg;
-  // // alert.classList.add(`alert-${type}`);
-  // // clearTimeout(timeClear);
-}
 function stopRecording() {
-  // alertFunc("recording stopped and saved successfully", "success");
+  alertFunc("success", "recording stopped and saved successfully");
 
   stopTimer();
   resetTimer();
@@ -446,30 +429,6 @@ async function playVideo() {
 
   imageList.appendChild(div1);
 
-  // let data;
-  // let videoId = Math.random().toString(36).substr(2, 11);
-  // text_input.oninput = (e) => {
-  //   text_input.value = e.target.value;
-  //   const timeData = new Date().toLocaleTimeString();
-  //   data = `
-  //   {
-  //     "id":"${videoId}"
-  //     "video Name":"${videoName}",
-  //     "Description":"${text_input.value}",
-  //     "time":"${timeData}"
-  //   }`;
-  // };
-  // text_input.onchange = () => {
-  //   fs.appendFile(`${dir}/${fname}_Videos_comments.txt`, data, function (err) {
-  //     if (err) throw err;
-  //     console.log("Thanks, It's saved to the file!");
-  //   });
-  //   alertFunc("commets are save successfully", "success");
-  //   text_input.value = "";
-  // };
-
-  // textAreaModal.innerText = "Add here";
-
   new_img_vid_id = new ImageVideoId(fname, time_in_mili);
   imageVideoIds.push(new_img_vid_id);
   console.log(new_img_vid_id.patientName, new_img_vid_id.imageVideoCaptureTime);
@@ -498,7 +457,7 @@ async function playVideo() {
       if (fs.existsSync(fileName)) {
         fs.unlink(fileName, function (err) {
           if (err) throw err;
-          // if no error, file has been deleted successfully
+
           console.log("File deleted!");
         });
       }
@@ -506,13 +465,8 @@ async function playVideo() {
       fs.writeFile(fileName, data, (err) => {
         if (err) return console.error(err);
         console.log("file saved to ", `${dir}/${fileName}`);
+        alertFunc("success", "commets are save successfully");
       });
-      // fs.appendFile(`${dir}/${fname}_Images_comments.txt`, data, function (err) {
-      //   if (err) throw err;
-      //   console.log("Thanks, It's saved to the file!");
-      // });
-
-      // text_input.value = "";
     }
   };
 }
@@ -562,6 +516,11 @@ async function saveVideo(dir) {
 function startNewData() {
   localStorage.clear();
 }
+function startForanotherPatient() {
+  localStorage.clear();
+}
+
+//timer
 var hr = 0;
 var min = 0;
 var sec = 0;

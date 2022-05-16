@@ -2,14 +2,12 @@ const fs = require("fs");
 
 let submitButton = document.getElementById("submit_button");
 // removeEventListener;
-let fname = document.getElementById("fname");
-let lname = document.getElementById("lname");
-let pnumber = document.getElementById("pnumber");
-let TOP = document.getElementById("TOP");
+
 var today = new Date();
 var todaysDate = today.toDateString().split(" ").join("_");
 var todaysTime = today.toTimeString().split(" ");
 var time = todaysTime[0].split(":").join("_");
+const save__btn = document.querySelector(".save__btn");
 
 //change the button name
 
@@ -21,13 +19,37 @@ fname.oninput = (e) => {
 //   submitButton.innerText = `${fname}`;
 // }
 
-function saveData() {
-  if (
-    fname.value != "" &&
-    lname.value != "" &&
-    pnumber.value != "" &&
-    TOP.value != ""
+save__btn.addEventListener("click", (e) => {
+  e.preventDefault();
+
+  let fname = document.getElementById("fname");
+  let lname = document.getElementById("lname");
+  let pnumber = document.getElementById("pnumber");
+  let TOP = document.getElementById("TOP");
+
+  if (fname.value == "" || fname.value.length < 3 || fname.value.length > 20) {
+    alertFunc(
+      "danger",
+      "First Name Must be atleast three character and maximum 20 character"
+    );
+    return false;
+  } else if (
+    lname.value == "" ||
+    lname.value.length < 3 ||
+    lname.value.length > 20
   ) {
+    alertFunc(
+      "danger",
+      "Last Name Must be atleast three character and maximum 20 character"
+    );
+    return false;
+  } else if (pnumber.value == "" || pnumber == null) {
+    alertFunc("danger", "Please fill the date");
+    return false;
+  } else if (TOP.value == "" || TOP == null) {
+    alertFunc("danger", "Type of procedure is required field");
+    return false;
+  } else {
     localStorage.setItem("fname", submitButton.innerText);
     const dir = `./patient-details/${submitButton.innerText}_${todaysDate}_${time}`;
     if (!fs.existsSync(dir)) {
@@ -60,4 +82,4 @@ function saveData() {
       });
     }
   }
-}
+});

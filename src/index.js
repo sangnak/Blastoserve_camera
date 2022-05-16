@@ -9,9 +9,10 @@ if (require("electron-squirrel-startup")) {
 
 const createWindow = () => {
   // Create the browser window.
+  let { width, height } = require("electron").screen.getPrimaryDisplay().size; //get the size of the windows screen
   const mainWindow = new BrowserWindow({
-    width: "100%",
-    height: "100%",
+    width: width,
+    height: height,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
