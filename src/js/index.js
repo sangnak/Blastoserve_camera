@@ -1,5 +1,8 @@
 const { time } = require("console");
 const fs = require("fs");
+const id = require("shortid");
+const nameForImage = id.generate();
+console.log(nameForImage);
 const webcamElement = document.getElementById("webcam");
 const canvasElement = document.getElementById("canvas");
 const snapSoundElement = document.getElementById("snapSound");
@@ -165,7 +168,7 @@ function takePicture() {
   // const imageName = saveImage(picture, dir);
   // console.log(imageName);
 
-  saveImage(picture, dir);
+  const Imagename = saveImage(picture, dir);
 
   img.alt = "image/png";
   div1.classList.add("img-container");
@@ -186,7 +189,7 @@ function takePicture() {
   let p_new = document.createElement("p");
   p_new.innerText = "Category : Image";
   text_input.classList.add("mt-1");
-
+  text_input.dataset.img__name = Imagename;
   text_input.placeholder = "Enter Note Here";
   text_input.cols = 24;
   text_input.id = today.toISOString().split(" ");
@@ -205,6 +208,7 @@ function takePicture() {
 
   let data;
   let imageId = Math.random().toString(36).substr(2, 11);
+  const id__generated = id.generate();
   text_input.oninput = (e) => {
     text_input.value = e.target.value;
 
@@ -232,14 +236,16 @@ function takePicture() {
 
     data = `
     {
-      "Description":"${text_input.value}",
+      "id":"${id__generated}",
+      "name":${e.target.dataset.img__name},
+      "Description":"${text_input.value.trim()}",
       "time":"${time_in_mili}"
     }`;
   };
 
   text_input.onblur = () => {
     let timeCount = time_in_mili[0].split(":").join("_");
-    let fileName = `${dir}/image_${timeCount}_notes.` + "txt";
+    let fileName = `${dir}/${Imagename}.` + "txt";
 
     let final = text_input.value.replace(/\s+/g, "");
     if (final == "") {
@@ -272,10 +278,10 @@ function saveImage(picture, dir) {
   let imageBuffer = decodedImg.data;
   let type = decodedImg.type;
   let extension = "png";
-  let count = new Date().toISOString().split(" ");
-  console.log(count);
-  let timeCount = count[0].split(":").join("_");
-  let fileName = `image_${timeCount}.` + extension;
+  // let count = new Date().toISOString().split(" ");
+  // console.log(count);
+  // let timeCount = count[0].split(":").join("_");
+  let fileName = `Image_${Date.now()}.` + extension;
 
   fs.writeFile(`${dir}/${fileName}`, imageBuffer, (err) => {
     if (err) return console.error(err);
@@ -285,6 +291,8 @@ function saveImage(picture, dir) {
       "Image saved successfully, Scroll down to see Images."
     );
   });
+
+  return fileName;
 }
 
 //Recording
@@ -407,7 +415,7 @@ async function playVideo() {
   video.muted = true;
   video.loop = true;
   video.play();
-  saveVideo(dir);
+  // saveVideo(dir);
   div1.classList.add("video-container");
   div.appendChild(video);
   let p = document.createElement("p");
@@ -425,7 +433,7 @@ async function playVideo() {
   text_input.classList.add("mt-1");
   text_input.placeholder = "Enter Note Here";
   text_input.cols = 24;
-
+  text_input.dataset.video__name = videoName;
   div_text_input.appendChild(text_input);
 
   div1.appendChild(h4);
@@ -438,24 +446,24 @@ async function playVideo() {
 
   new_img_vid_id = new ImageVideoId(fname, time_in_mili);
   imageVideoIds.push(new_img_vid_id);
-  console.log(new_img_vid_id.patientName, new_img_vid_id.imageVideoCaptureTime);
-  console.log(time_in_mili);
 
   let data;
-  let imageId = Math.random().toString(36).substr(2, 11);
+  const id__generated = id.generate();
   text_input.oninput = (e) => {
     text_input.value = e.target.value;
 
     data = `
     {
-      "Description":"${text_input.value}",
-      "time":"${time_in_mili}"
+      "id":"${id__generated}",
+      "Video Name":"${e.target.dataset.video__name}"
+      "Description":"${text_input.value.trim(" ")}",
+      "Time":"${time_in_mili}"
     }`;
   };
 
-  text_input.onblur = () => {
+  text_input.onblur = (e) => {
     let timeCount = time_in_mili[0].split(":").join("_");
-    let fileName = `${dir}/image_${timeCount}_notes.` + "txt";
+    let fileName = `${dir}/${e.target.dataset.video__name}.` + "txt";
 
     let final = text_input.value.replace(/\s+/g, "");
     if (final == "") {
@@ -510,13 +518,14 @@ async function playVideo() {
 async function saveVideo(dir) {
   const blob = new Blob(recordedBlobs, { type: "video/mp4" });
   const buffer = Buffer.from(await blob.arrayBuffer());
-  let count = new Date().toTimeString().split(" ");
 
-  count = count[0].split(":").join("_");
-  fs.writeFile(`${dir}/video_${count}.mp4`, buffer, (err) => {
+  const count = Date.now();
+  const videoName = `video_${count}.mp4`;
+  fs.writeFile(`${dir}/${videoName}`, buffer, (err) => {
     if (err) return console.error(err);
     console.log("file saved to ", `${dir}/video.mp4`);
   });
+  return videoName;
 }
 //clear localstorage
 

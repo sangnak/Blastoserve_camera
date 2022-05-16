@@ -63,7 +63,7 @@ body {
   font-weight: bold;
 }
 #myImageList p {
-  font-size: large;
+  margin: 2px auto !important;
 }
 #myImageList video {
   width: 200px;
