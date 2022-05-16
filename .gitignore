@@ -33,17 +33,9 @@ coverage
 build/Release
 
 # Dependency directories
-node_modules
-jspm_packages
+node_modules/
+jspm_packages/
 
-
-.vscode
-
-src/js/js
-src/sample.js
-patient-details
-src/js/slider.js
-src/css/style.css
 # TypeScript v1 declaration files
 typings/
 
@@ -96,4 +88,9 @@ typings/
 # Electron-Forge
 out/
 
-release-builds
+#some other
+
+patient-details
+src/js/slider.js
+src/css/style.css
+user-data.json

@@ -12,6 +12,14 @@
   </head>
   <body>
 
+    <!-- Title Buttons and webcam preview -->
+    <div id="alertsOfForm" class="alert text-center my-2" style="height:50px; width: 100%; text-align: center;">
+        
+    </div>
+    <section class="container mt-2">
+      
+
+
     <!-- Trigger/Open The Modal -->
     <!-- <button id="myBtn">Open Modal</button> -->
 
@@ -44,7 +52,8 @@
     <!-- Modal ends here  -->
 
     <!-- Title Buttons and webcam preview -->
-    <section class="container my-5 py-3">
+    <section class="container">
+
       <div
         class="d-flex justify-content-center"
         style="width: 100%; margin: 0 auto"
@@ -66,7 +75,7 @@
               class="btn btn-green mt-3 px-4 border border-primary py-3 w-500"
               onclick="takePicture()"
             >
-              Click here or on image to take photos
+              Click here or Click on image to take Photos
             </button>
           </div>
 
@@ -118,21 +127,23 @@
           <!-- Collect data of another patient  -->
 
           <div
-            class="container d-flex justify-content-center"
+            class="container d-flex justify-content-center content_img"
             style="width: 100%"
           >
             <a
+            onclick="startForanotherPatient()"
               href="../index.html"
               class="btn btn-light mt-3 px-4 border border-primary py-3 w-500"
             >
-              collect data for another patient
+            Saved Data and  Collect Data For New Patient  
             </a>
+            <!-- <div class="text-center">collect the data for new patient and save automatically this data</div> -->
           </div>
 
           <!-- Stop taking data   -->
 
           <div
-            class="container d-flex justify-content-center"
+            class="container d-flex justify-content-center content_img"
             style="width: 100%"
           >
             <a
@@ -140,8 +151,9 @@
               class="btn btn-light mt-3 px-4 border border-primary py-3 w-500"
               onclick="startNewData()"
             >
-              Stop taking data
+              Save Current Data and Moved to first page
             </a>
+            <!-- <div>stop collecting data and go to the first page</div> -->
           </div>
         </div>
 
@@ -154,7 +166,10 @@
             class="d-flex justify-content-center mb-4 ms-5"
             style="width: 100%"
           >
-            <label for="select">Choose Camera :</label>
+
+            <label for="select" class="mx-2" style="    font-size: 1.5rem;
+            background: yellow;">Select Camera :</label>
+
             <select id="select"></select>
           </div>
 
@@ -167,7 +182,9 @@
             onclick="takePicture()"
             width="900"
             height="auto"
-            class="webcam-video"
+
+            class="webcam-video shadow rounded"
+
           ></video>
 
           <div class="icons">
@@ -180,12 +197,14 @@
           <canvas id="canvas" class="d-none"></canvas>
 
           <!-- Snapsound on image save  -->
-
+<!-- 
           <audio
             id="snapSound"
-            src="../assets/audio/snap.mp3"
+
+            src="../assets/audio/snap1.mp3"
+
             preload="auto"
-          ></audio>
+          ></audio> -->
         </div>
       </div>
     </section>
@@ -200,6 +219,7 @@
 
     <script src="../js/fullsreen.js"></script>
     <script src="../js/webCam.js"></script>
+    <script src="../js/alert.Function.js"></script>
     <script src="../js/index.js"></script>
   </body>
 </html>

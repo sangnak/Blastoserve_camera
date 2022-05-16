@@ -1,5 +1,8 @@
 const { time } = require("console");
 const fs = require("fs");
+const id = require("shortid");
+const nameForImage = id.generate();
+console.log(nameForImage);
 const webcamElement = document.getElementById("webcam");
 const canvasElement = document.getElementById("canvas");
 const snapSoundElement = document.getElementById("snapSound");
@@ -9,6 +12,7 @@ let headingData = document.getElementById("heading-data");
 
 let select = document.querySelector("#select");
 
+let alert = document.getElementById("alert-component");
 headingData.innerText = `${localStorage.getItem(
   "fname"
 )}(${localStorage.getItem("TOP")})`;
@@ -24,11 +28,23 @@ let fname = localStorage.getItem("fname");
 
 // startCamera();
 
+let constraint = {
+  video: true,
+  audio: false,
+};
 try {
-  webcam.start();
-  navigator.mediaDevices.enumerateDevices().then(gotDevices);
+  // webcam.start();
+  navigator.mediaDevices
+    .getUserMedia(constraint)
+    .then((stream) => {
+      window.stream = stream;
+      webcamElement.srcObject = stream;
+      return navigator.mediaDevices.enumerateDevices();
+    })
+    .then(gotDevices);
 } catch (error) {
-  alert("webcam is not connected ");
+  alertFunc("danger", "Webcam is not connected");
+
   console.log(error);
 }
 //to genarate the list of attached camera start
@@ -90,7 +106,7 @@ select.addEventListener("change", (event) => {
     })
     .then(gotDevices)
     .catch((error) => {
-      console.error(error);
+      alertFunc("danger", error);
     });
 });
 // generated camera list end
@@ -106,7 +122,6 @@ select.addEventListener("change", (event) => {
 // var span = document.getElementsByClassName("close")[0];
 
 // var textAreaModal = document.getElementById("addNotesTextArea");
-
 
 // // When the user clicks on the button, open the modal
 // function openModal() {
@@ -127,7 +142,7 @@ select.addEventListener("change", (event) => {
 //     }
 // };
 
-let imageVideoIds = []
+let imageVideoIds = [];
 class ImageVideoId {
   constructor(patientName, imageVideoCaptureTime) {
     this.patientName = patientName;
@@ -149,12 +164,20 @@ function takePicture() {
   let div = document.createElement("div");
   let div1 = document.createElement("div");
   img.src = picture;
-  saveImage(picture, dir);
+
+  // const imageName = saveImage(picture, dir);
+  // console.log(imageName);
+
+  const Imagename = saveImage(picture, dir);
+
   img.alt = "image/png";
   div1.classList.add("img-container");
   div.appendChild(img);
   let p = document.createElement("p");
   var today = new Date();
+
+  // p.innerText = `Time : ${today.toLocaleTimeString()}`;
+
   let time_in_mili = today.toISOString().split(" ");
   p.innerText = `Time : ${today.toLocaleTimeString()}`;
 
@@ -163,82 +186,84 @@ function takePicture() {
   div_text_input.classList.add("d-flex");
   div_text_input.classList.add("justify-content-center");
   div_text_input.style.minheight = "100%";
-
+  let p_new = document.createElement("p");
+  p_new.innerText = "Category : Image";
   text_input.classList.add("mt-1");
-  text_input.placeholder = "Note Here";
+  text_input.dataset.img__name = Imagename;
+  text_input.placeholder = "Enter Note Here";
   text_input.cols = 24;
   text_input.id = today.toISOString().split(" ");
   div_text_input.appendChild(text_input);
-
-  // let div_addnote_btn = document.createElement("div");
-  // div_addnote_btn.classList.add("container")
-  // div_addnote_btn.classList.add("d-flex");
-  // div_addnote_btn.classList.add("justify-content-center");
-  // div_addnote_btn.style.width = "100%"
-
-  // let button_of_div = document.createElement("button")
-  // button_of_div.id = "myBtn"
-  // button_of_div.addEventListener("click", openModal)
-  // button_of_div.classList.add("btn")
-  // button_of_div.classList.add("btn-green");
-  // button_of_div.classList.add("mt-2");
-  // button_of_div.classList.add("border-primary");
-  // button_of_div.classList.add("py-3");
-  // button_of_div.classList.add("px-5");
-  // button_of_div.innerText = "Add Notes"
-  // div_addnote_btn.append(button_of_div);
-
   div1.appendChild(h4);
   div1.appendChild(p);
+  div1.appendChild(p_new);
   div1.appendChild(div);
   imageList.appendChild(div1);
   div1.appendChild(div_text_input);
 
   new_img_vid_id = new ImageVideoId(fname, time_in_mili);
   imageVideoIds.push(new_img_vid_id);
-  console.log(new_img_vid_id.patientName, new_img_vid_id.imageVideoCaptureTime);
-  console.log(time_in_mili);
+  // console.log(new_img_vid_id.patientName, new_img_vid_id.imageVideoCaptureTime);
+  // console.log(time_in_mili);
 
   let data;
   let imageId = Math.random().toString(36).substr(2, 11);
+  const id__generated = id.generate();
   text_input.oninput = (e) => {
     text_input.value = e.target.value;
 
+    const timeData = new Date().toLocaleTimeString();
+
+    // data = `
+    // {
+    //   "id":"${imageId}"
+    //   "image Name":"${imageName}",
+    //   "Description":"${text_input.value}",
+    //   "time":"${timeData}"
+    // }`;
+
+    //   text_input.onchange = () => {
+    //     fs.appendFile(`${dir}/${fname}_Images_comments.txt`, data, function (err) {
+    //       if (err) throw err;
+    //       console.log("Thanks, It's saved to the file!");
+    //     });
+    //     alertFunc("commets are save successfully", "success");
+    //     text_input.value = "";
+    //   };
+    // }
+
+    //save images
+
     data = `
     {
-      "Description":"${text_input.value}",
+      "id":"${id__generated}",
+      "name":${e.target.dataset.img__name},
+      "Description":"${text_input.value.trim()}",
       "time":"${time_in_mili}"
     }`;
   };
 
   text_input.onblur = () => {
     let timeCount = time_in_mili[0].split(":").join("_");
-    let fileName = `${dir}/image_${timeCount}_notes.` + "txt";
+    let fileName = `${dir}/${Imagename}.` + "txt";
 
     let final = text_input.value.replace(/\s+/g, "");
     if (final == "") {
       text_input.value = null;
 
-      if(fs.existsSync(fileName)){
+      if (fs.existsSync(fileName)) {
         fs.unlink(fileName, function (err) {
           if (err) throw err;
-          // if no error, file has been deleted successfully
+          alertFunc("danger", "File deleted!");
           console.log("File deleted!");
         });
       }
-
     } else {
-      
       fs.writeFile(fileName, data, (err) => {
         if (err) return console.error(err);
         console.log("file saved to ", `${dir}/${fileName}`);
+        alertFunc("success", "file saved successfully");
       });
-      // fs.appendFile(`${dir}/${fname}_Images_comments.txt`, data, function (err) {
-      //   if (err) throw err;
-      //   console.log("Thanks, It's saved to the file!");
-      // });
-
-      // text_input.value = "";
     }
   };
 }
@@ -253,15 +278,21 @@ function saveImage(picture, dir) {
   let imageBuffer = decodedImg.data;
   let type = decodedImg.type;
   let extension = "png";
-  let count = new Date().toISOString().split(" ");
-  console.log(count);
-  let timeCount = count[0].split(":").join("_");
-  let fileName = `image_${timeCount}.` + extension;
+  // let count = new Date().toISOString().split(" ");
+  // console.log(count);
+  // let timeCount = count[0].split(":").join("_");
+  let fileName = `Image_${Date.now()}.` + extension;
 
   fs.writeFile(`${dir}/${fileName}`, imageBuffer, (err) => {
     if (err) return console.error(err);
     console.log("file saved to ", `${dir}/${fileName}`);
+    alertFunc(
+      "success",
+      "Image saved successfully, Scroll down to see Images."
+    );
   });
+
+  return fileName;
 }
 
 //Recording
@@ -293,16 +324,16 @@ function startRecording() {
   let options = { mimeType: "video/webm;codecs=vp9,opus" };
   try {
     if (window.stream == null) {
-      alert("please select camera");
+      alertFunc("warning", "please select camera");
       recordButton.textContent = "Start Recording";
       return;
     } else {
-      // alert("recording started");
       mediaRecorder = new MediaRecorder(window.stream, options);
-
       recordButton.textContent = "Stop Recording";
       timer.style.display = "block";
       pause.style.display = "block";
+      alertFunc("success", "Recording Started");
+
       startTimer();
     }
   } catch (e) {
@@ -332,8 +363,11 @@ function handleDataAvailable(event) {
   }
 }
 
+//alert func
+
 function stopRecording() {
-  // alert("recording stopped and saved automatically");
+  alertFunc("success", "recording stopped and saved successfully");
+
   stopTimer();
   resetTimer();
   timer.style.display = "none";
@@ -361,7 +395,8 @@ function resumeRecording() {
 }
 
 // Previous playvideo with textarea
-function playVideo() {
+
+async function playVideo() {
   const superBuffer = new Blob(recordedBlobs, { type: "video/webm" });
 
   let h4 = document.createElement("h4");
@@ -372,21 +407,23 @@ function playVideo() {
   let div1 = document.createElement("div");
   video.src = null;
   video.srcObject = null;
+  video.src = window.URL.createObjectURL(superBuffer);
+  let dir = localStorage.getItem("dir");
+  const videoName = await saveVideo(dir);
   video.controls = true;
   video.autoplay = true;
   video.muted = true;
   video.loop = true;
   video.play();
-  video.src = window.URL.createObjectURL(superBuffer);
-  let dir = localStorage.getItem("dir");
-  saveVideo(dir);
+  // saveVideo(dir);
   div1.classList.add("video-container");
   div.appendChild(video);
   let p = document.createElement("p");
   let today = new Date();
   let time_in_mili = today.toISOString().split(" ");
   p.innerText = `Time : ${today.toLocaleTimeString()}`;
-
+  let p_new = document.createElement("p");
+  p_new.innerText = "Category : Video";
   let div_text_input = document.createElement("div");
   let text_input = document.createElement("textarea");
   div_text_input.classList.add("d-flex");
@@ -394,57 +431,39 @@ function playVideo() {
   div_text_input.style.minheight = "100%";
 
   text_input.classList.add("mt-1");
-  text_input.placeholder = "Note Here";
+  text_input.placeholder = "Enter Note Here";
   text_input.cols = 24;
-  text_input.id = today.toISOString().split(" ");
+  text_input.dataset.video__name = videoName;
   div_text_input.appendChild(text_input);
-
-  // let div_addnote_btn = document.createElement("div");
-  // div_addnote_btn.classList.add("container");
-  // div_addnote_btn.classList.add("d-flex");
-  // div_addnote_btn.classList.add("justify-content-center");
-  // div_addnote_btn.style.width = "100%";
-
-  // let button_of_div = document.createElement("button");
-  // button_of_div.id = "myBtn";
-  // button_of_div.addEventListener("click", openModal);
-  // button_of_div.classList.add("btn");
-  // button_of_div.classList.add("btn-green");
-  // button_of_div.classList.add("mt-2");
-  // button_of_div.classList.add("border-primary");
-  // button_of_div.classList.add("py-3");
-  // button_of_div.classList.add("px-5");
-  // button_of_div.innerText = "Add Notes";
-  // div_addnote_btn.append(button_of_div);
 
   div1.appendChild(h4);
   div1.appendChild(p);
+  div1.appendChild(p_new);
   div1.appendChild(div);
-  imageList.appendChild(div1);
   div1.appendChild(div_text_input);
 
-  // textAreaModal.innerText = "Add here";
+  imageList.appendChild(div1);
 
   new_img_vid_id = new ImageVideoId(fname, time_in_mili);
   imageVideoIds.push(new_img_vid_id);
-  console.log(new_img_vid_id.patientName, new_img_vid_id.imageVideoCaptureTime);
-  console.log(time_in_mili);
 
   let data;
-  let imageId = Math.random().toString(36).substr(2, 11);
+  const id__generated = id.generate();
   text_input.oninput = (e) => {
     text_input.value = e.target.value;
 
     data = `
     {
-      "Description":"${text_input.value}",
-      "time":"${time_in_mili}"
+      "id":"${id__generated}",
+      "Video Name":"${e.target.dataset.video__name}"
+      "Description":"${text_input.value.trim(" ")}",
+      "Time":"${time_in_mili}"
     }`;
   };
 
-  text_input.onblur = () => {
+  text_input.onblur = (e) => {
     let timeCount = time_in_mili[0].split(":").join("_");
-    let fileName = `${dir}/image_${timeCount}_notes.` + "txt";
+    let fileName = `${dir}/${e.target.dataset.video__name}.` + "txt";
 
     let final = text_input.value.replace(/\s+/g, "");
     if (final == "") {
@@ -453,7 +472,7 @@ function playVideo() {
       if (fs.existsSync(fileName)) {
         fs.unlink(fileName, function (err) {
           if (err) throw err;
-          // if no error, file has been deleted successfully
+
           console.log("File deleted!");
         });
       }
@@ -461,16 +480,10 @@ function playVideo() {
       fs.writeFile(fileName, data, (err) => {
         if (err) return console.error(err);
         console.log("file saved to ", `${dir}/${fileName}`);
+        alertFunc("success", "commets are save successfully");
       });
-      // fs.appendFile(`${dir}/${fname}_Images_comments.txt`, data, function (err) {
-      //   if (err) throw err;
-      //   console.log("Thanks, It's saved to the file!");
-      // });
-
-      // text_input.value = "";
     }
   };
-  
 }
 
 // function playVideo() {
@@ -505,19 +518,25 @@ function playVideo() {
 async function saveVideo(dir) {
   const blob = new Blob(recordedBlobs, { type: "video/mp4" });
   const buffer = Buffer.from(await blob.arrayBuffer());
-  let count = new Date().toTimeString().split(" ");
 
-  count = count[0].split(":").join("_");
-  fs.writeFile(`${dir}/video_${count}.mp4`, buffer, (err) => {
+  const count = Date.now();
+  const videoName = `video_${count}.mp4`;
+  fs.writeFile(`${dir}/${videoName}`, buffer, (err) => {
     if (err) return console.error(err);
     console.log("file saved to ", `${dir}/video.mp4`);
   });
+  return videoName;
 }
 //clear localstorage
 
 function startNewData() {
   localStorage.clear();
 }
+function startForanotherPatient() {
+  localStorage.clear();
+}
+
+//timer
 var hr = 0;
 var min = 0;
 var sec = 0;
