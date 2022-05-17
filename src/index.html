@@ -5,12 +5,8 @@
 
     <title>Blastoserve Camera</title>
 
-
-    <script defer src="./js/render.js"></script>
     <link rel="stylesheet" href="./css/bootstrapcss.css" />
     <link rel="stylesheet" href="./css/index.css" />
-
-
   </head>
 
   <body class="content">
@@ -18,13 +14,13 @@
       class="form mt-auto"
       style="height: 100%; transform: translateY(20%)"
     >
+      <div id="alertsOfForm" class="alert text-center" style="height:50px ">
+        
+      </div>
       <div class="container container1">
-
-        <h2 class="text-center  mb-5">fill this patient form </h2>
+        <h2 class="text-center mb-5">fill this patient form</h2>
 
         <form>
-
-          
           <div class="mb-3">
             <label for="fname" class="form-label mx-lg-3 my-2"
               >First Name :</label
@@ -34,7 +30,6 @@
               class="form-control"
               id="fname"
               name="fname"
-              onchange="handleChange()"
               required
               minlength="3"
               maxlength="20"
@@ -46,6 +41,23 @@
             >
             <input type="text" class="form-control" id="lname" name="lname" />
           </div>
+          <!--
+          <div class="mb-3">
+            <label for="phonenumber" class="form-label mx-lg-3 my-2"
+              >Contact Number :</label
+            >
+            <input
+              type="tel"
+              class="form-control"
+              id="pnumber"
+              name="pnumber"
+              minlength="10"
+              pattern="^\d{3}-\d{3}-\d{4}$"
+              maxlength="12"
+              required
+            />
+          </div>
+        -->
 
           <div class="mb-3">
             <label for="phonenumber" class="form-label mx-lg-3 my-2"
@@ -74,22 +86,19 @@
           </div>
 
           <div
-            class="container d-flex justify-content-center"
+            class="container d-flex justify-content-center content_img"
             style="width: 100%"
           >
-            <button
-              class="btn btn-green mt-3 px-5"
-              type="submit"
-              onclick="saveData()"
-            >
+            <button class="btn btn-green mt-3 px-5 save__btn" type="submit">
               start capturing data <span id="submit_button">patient name</span>
             </button>
+            <!-- <div>submit the patient data and save automatically</div> -->
           </div>
         </form>
-
-
       </div>
     </section>
 
+    <script src="./js/alert.Function.js"></script>
+    <script src="./js/render.js"></script>
   </body>
 </html>
