@@ -1,8 +1,6 @@
 const { time } = require("console");
 const fs = require("fs");
-const id = require("shortid");
-const nameForImage = id.generate();
-console.log(nameForImage);
+
 const webcamElement = document.getElementById("webcam");
 const canvasElement = document.getElementById("canvas");
 const snapSoundElement = document.getElementById("snapSound");
@@ -208,7 +206,7 @@ function takePicture() {
 
   let data;
   let imageId = Math.random().toString(36).substr(2, 11);
-  const id__generated = id.generate();
+
   text_input.oninput = (e) => {
     text_input.value = e.target.value;
 
@@ -236,7 +234,6 @@ function takePicture() {
 
     data = `
     {
-      "id":"${id__generated}",
       "Image Name":${e.target.dataset.img__name},
       "Description":"${text_input.value.trim()}",
       "time":"${time_in_mili}"
@@ -448,13 +445,12 @@ async function playVideo() {
   imageVideoIds.push(new_img_vid_id);
 
   let data;
-  const id__generated = id.generate();
+
   text_input.oninput = (e) => {
     text_input.value = e.target.value;
 
     data = `
     {
-      "id":"${id__generated}",
       "Video Name":"${e.target.dataset.video__name}"
       "Description":"${text_input.value.trim(" ")}",
       "Time":"${time_in_mili}"

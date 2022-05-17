@@ -9,6 +9,7 @@
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish",
+    "package-win": "electron-packager . blastoserve_camera --overwrite --asar=true --platform=win32 --arch=ia32 --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Blastoserve Camera\"",
     "lint": "echo \"No linting configured\""
   },
   "keywords": [],
@@ -52,8 +53,7 @@
   },
   "dependencies": {
     "electron-squirrel-startup": "^1.0.0",
-    "mongodb": "^4.5.0",
-    "shortid": "^2.2.16"
+    "mongodb": "^4.5.0"
   },
   "devDependencies": {
     "@electron-forge/cli": "^6.0.0-beta.63",
