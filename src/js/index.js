@@ -237,7 +237,7 @@ function takePicture() {
     data = `
     {
       "id":"${id__generated}",
-      "name":${e.target.dataset.img__name},
+      "Image Name":${e.target.dataset.img__name},
       "Description":"${text_input.value.trim()}",
       "time":"${time_in_mili}"
     }`;

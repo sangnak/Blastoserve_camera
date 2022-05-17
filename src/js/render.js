@@ -60,17 +60,11 @@ save__btn.addEventListener("click", (e) => {
       localStorage.setItem("dir", dir);
       localStorage.setItem("TOP", TOP.value);
 
-      let data = `
-
+      let data = `{
       'First Name' : ${fname.value},
       'Last Name' : ${lname.value},
-
       'Date' : ${pnumber.value},
-
-      'Type Of Procedure' : ${TOP.value}
-      
-      
-      `;
+      'Type Of Procedure' : ${TOP.value}}`;
 
       fs.writeFile(`${dir}/${submitButton.innerText}.txt`, data, (err) => {
         if (err) console.log(err);
