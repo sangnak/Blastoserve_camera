@@ -130,9 +130,9 @@
             </div>
         </div>
 
-        <div>
+        <div id="checkbox-dont-show">
             <input type="checkbox" id="myCheckbox" name="instructions" value="instructions" />
-            <label for="intructions">Dont show again</label><br />
+            <label for="intructions">Don't show again</label><br />
         </div>
 
         <!-- Start collecting data    -->
@@ -146,19 +146,22 @@
 <script>
     const checkbox = document.getElementById("myCheckbox");
     const fs = require("fs");
-
+    
+    const checkbox__show = document.getElementById("checkbox-dont-show");
+    
     checkbox.addEventListener("change", (event) => {
         if (event.currentTarget.checked) {
             const dir = `user-data.json`;
             let data = '{ "show-instructions": false }';
-
+           
             fs.writeFile(dir, data, (err) => {
                 if (err) console.log(err);
             });
+            
         } else {
             const dir = `user-data.json`;
             let data = '{ "show-instructions": true }';
-
+            
             fs.writeFile(dir, data, (err) => {
                 if (err) console.log(err);
             });

@@ -1,4 +1,4 @@
-const { time } = require("console");
+
 const fs = require("fs");
 
 const webcamElement = document.getElementById("webcam");
@@ -43,7 +43,7 @@ try {
 } catch (error) {
   alertFunc("danger", "Webcam is not connected");
 
-  console.log(error);
+  // console.log(error);
 }
 //to genarate the list of attached camera start
 
@@ -162,20 +162,13 @@ function takePicture() {
   let div = document.createElement("div");
   let div1 = document.createElement("div");
   img.src = picture;
+ const Imagename = saveImage(picture, dir);
 
-  // const imageName = saveImage(picture, dir);
-  // console.log(imageName);
-
-  const Imagename = saveImage(picture, dir);
-
-  img.alt = "image/png";
+  img.alt = "imagew";
   div1.classList.add("img-container");
   div.appendChild(img);
   let p = document.createElement("p");
   var today = new Date();
-
-  // p.innerText = `Time : ${today.toLocaleTimeString()}`;
-
   let time_in_mili = today.toISOString().split(" ");
   p.innerText = `Time : ${today.toLocaleTimeString()}`;
 
@@ -201,9 +194,6 @@ function takePicture() {
 
   new_img_vid_id = new ImageVideoId(fname, time_in_mili);
   imageVideoIds.push(new_img_vid_id);
-  // console.log(new_img_vid_id.patientName, new_img_vid_id.imageVideoCaptureTime);
-  // console.log(time_in_mili);
-
   let data;
   let imageId = Math.random().toString(36).substr(2, 11);
 
@@ -212,26 +202,7 @@ function takePicture() {
 
     const timeData = new Date().toLocaleTimeString();
 
-    // data = `
-    // {
-    //   "id":"${imageId}"
-    //   "image Name":"${imageName}",
-    //   "Description":"${text_input.value}",
-    //   "time":"${timeData}"
-    // }`;
-
-    //   text_input.onchange = () => {
-    //     fs.appendFile(`${dir}/${fname}_Images_comments.txt`, data, function (err) {
-    //       if (err) throw err;
-    //       console.log("Thanks, It's saved to the file!");
-    //     });
-    //     alertFunc("commets are save successfully", "success");
-    //     text_input.value = "";
-    //   };
-    // }
-
-    //save images
-
+   
     data = `
     {
       "Image Name":${e.target.dataset.img__name},
@@ -274,12 +245,8 @@ function saveImage(picture, dir) {
   let decodedImg = response;
   let imageBuffer = decodedImg.data;
   let type = decodedImg.type;
-  let extension = "png";
-  // let count = new Date().toISOString().split(" ");
-  // console.log(count);
-  // let timeCount = count[0].split(":").join("_");
+  let extension = type.split("/")[1];
   let fileName = `Image_${Date.now()}.` + extension;
-
   fs.writeFile(`${dir}/${fileName}`, imageBuffer, (err) => {
     if (err) return console.error(err);
     console.log("file saved to ", `${dir}/${fileName}`);
